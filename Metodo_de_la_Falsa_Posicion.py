@@ -1,14 +1,18 @@
+"""Modulo que contiene el Metodo de la Falsa Posicion"""
+
 import math as m
 import sys
+import sympy as sp
+
+# Declaracion de variable simbolica
+x = sp.symbols('x')
 
 """Definicion de la funcion "f de x"""
-def Funcion(x):
-    #return pow(x, 10) - 1
-    #return pow(x, 3) - x - 1
-    return((668.06 / x) * (1 - pow(m.e, (-0.146843 * x))) - 40)
+def Funcion(n):
+    return float(fun.subs(x, n))
 
 """Definicion de la funcion que llevara a cabo el proceso del Metodo de la Falsa Posicion"""
-def Falsa_Posicion(xInf, xSup, tolerancia):
+def Falsa_Posicion(xInf, xSup, tolerancia, limite):
     # Variables auxiliares
     cont = 0
     il = 0
@@ -18,8 +22,13 @@ def Falsa_Posicion(xInf, xSup, tolerancia):
     f_xInf = Funcion(xInf)
     f_xSup = Funcion(xSup)
 
+    print("-" * 127)
+    print("|{:^8}|{:^8}|{:^12}|{:^12}|{:^28}|{:^20}|{:^31}|".format("a", "b", "f(a)", "f(b)", "x = b-((fb*(a-b))/(fa-fb))", "f(a) * f(x) < 0",
+    f"|f(x)| < {tolerancia}"))
+    print("-" * 127)
+
     # Bucle que se repetira hasta que se encuentre la raiz
-    while(True):
+    while True:
 
         if il >= 2:
             # Si la variable "il" es igual o mayor a dos significa que se han sobrepasado el limite
@@ -38,7 +47,15 @@ def Falsa_Posicion(xInf, xSup, tolerancia):
         # Incrementa el contador de interacciones
         cont += 1
 
-        if(f_xInf * f_xr < 0):
+        # Asignacion de valores a variables auxiliares para imprimirlos
+        aux1 = abs(f_xr) <= tolerancia
+        aux2 = f_xInf * f_xr < 0
+
+        print("|{:^8}|{:^8}|{:^12}|{:^12}|{:^28}|{:^12} - {:^5}|{:^18} - {:^10}|".format(round(xInf, 4), round(xSup, 4), round(f_xInf, 4),
+        round(f_xSup, 4), round(xr, 4), round((f_xInf * f_xr), 4), bool(aux2), round(abs(f_xr), 8), bool(aux1)))
+
+        
+        if (f_xInf * f_xr) < 0:
             # La raiz se encuentra dentro del subintervalo inferior o izquierdo
             xSup = xr
             f_xSup = Funcion(xSup)
@@ -46,7 +63,7 @@ def Falsa_Posicion(xInf, xSup, tolerancia):
             iu = 0
             # Se incrementa el valor de la variable auxiliar para saber si se tiene que dividir el intervalo
             il += 1
-        elif(f_xInf * f_xr > 0):
+        elif (f_xInf * f_xr) > 0:
             # La raiz se encuentra dentro del subintervalo superior o derecho
             xInf = xr
             f_xInf = Funcion(xInf)
@@ -54,39 +71,47 @@ def Falsa_Posicion(xInf, xSup, tolerancia):
             il = 0
             # Se incrementa el valor de la variable auxiliar para saber si se tiene que dividir el intervalo
             iu += 1
-        elif(f_xInf * f_xr == 0):
+        elif (f_xInf * f_xr) == 0:
             # Se ha encontrado la raíz, por lo tanto, termina el calculo
             break
         
         # Condicionales que sirven como criterio de terminacion para terminar los calculos
-        if(not(f_xSup * f_xInf > 0)) and (abs((xSup - xInf) / (xSup + xInf)) * 100 <= tolerancia):
-            print(abs((xSup - xInf) / (xSup + xInf)) * 100)
+        if abs(f_xr) <= tolerancia:
             break
         elif abs(f_xInf) <= tolerancia:
-            print(abs(f_xInf))
             xr = xInf
             break
         elif abs(Funcion(xSup)) <= tolerancia:
-            print(Funcion(xSup))
             xr = xSup
             break
 
-        if cont == 1000:
-            # En caso que se hayan hecho 1000 iteraciones, entonces suponemos que
+        if cont == limite:
+            # En caso que se hayan hecho 'x' iteraciones, entonces suponemos que
             # no existe raiz en el intervalo y se detiene la ejecucion del programa
-            print("Se ha llegado al limite de iteraciones (1000) y no se ha encontrado una posible raiz")
-            print("Pruebe con otro intervalo")
+            print("-" * 127)
+            print("\n\nSe ha llegado al limite de iteraciones y no se ha encontrado una posible raiz")
+            print("Pruebe con otro intervalo\n\n")
             sys.exit(1)
 
-    print("Se contaron ", cont, "iteraciones")
+    print("-" * 127)
+    print("\nSe contaron ", cont, "iteraciones\n")
 
     return xr
 
-# Pide al usuario los valores
-x1 = float(input("Ingrese un valor inicial inferior: "))
-x2 = float(input("Ingrese un valor final superior: "))
-error = float(input("Ingrese el error de tolerancia (en porcentaje): "))
 
-xr = Falsa_Posicion(x1, x2, error)
+def Metodo_Falsa_Posicion(expr):
+    print("\n\nMetodo de la falsa posicion\n")
+    # Convierte la funcion a formato sympy
+    global fun
+    fun = sp.sympify(expr)
 
-print("La posible raiz es:", xr)
+    # Pide al usuario los valores necesarios para el metodo
+    x1 = float(input("Ingrese un valor inicial inferior: "))
+    x2 = float(input("Ingrese un valor final superior: "))
+    error = float(input("Ingrese el error de tolerancia (en porcentaje): "))
+    limite = int(input("Ingrese el limite de iteraciones: "))
+    print()
+
+    xr = Falsa_Posicion(x1, x2, error, limite)
+
+    print("\nLa posible raiz es:", xr, "\n")
