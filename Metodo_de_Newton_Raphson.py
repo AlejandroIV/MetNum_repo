@@ -7,14 +7,14 @@ import sympy as sp
 # Declaracion de variable simbolica
 x = sp.symbols('x')
 
-"""Definicion de la funcion 'f de x'"""
 def Funciones():
+    """Definicion de la funcion 'f de x'"""
     # Calcula la derivada de la funcion almacenada en "f_Y" para almacenarla en la variable 'fPrima_Y'
     global fPrima_X
     fPrima_X = f_X.diff(x)
 
-"""Definicion de la funcion que llevara a cabo el proceso del Metodo de Newton-Raphson"""
 def Newton_Raphson(xr, tolerancia, limite):
+    """Funcion que llevara a cabo el proceso del Metodo de Newton-Raphson"""
     # Variables auxiliares
     cont = 0
     Funciones()

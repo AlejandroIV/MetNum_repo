@@ -7,12 +7,12 @@ import sympy as sp
 # Declaracion de variable simbolica
 x = sp.symbols('x')
 
-"""Definicion de la funcion "f de x"""
 def Funcion(n):
+    """Definicion de la funcion "f de x"""
     return float(fun.subs(x, n))
 
-"""Definicion de la funcion que llevara a cabo el proceso del Metodo de la Falsa Posicion"""
 def Falsa_Posicion(xInf, xSup, tolerancia, limite):
+    """Funcion que llevara a cabo el proceso del Metodo de la Falsa Posicion"""
     # Variables auxiliares
     cont = 0
     il = 0

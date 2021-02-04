@@ -7,12 +7,12 @@ import sympy as sp
 # Declaracion de la variable simbolica
 x = sp.symbols('x')
 
-"""Definicion de la funcion 'f de x'"""
 def Funcion(n):
+    """Definicion de la funcion 'f de x'"""
     return float(fun.subs(x, n))
 
-"""Definicion de la funcion que llevara a cabo el proceso del Metodo de la secante"""
 def Secante(x, incremento, tolerancia, limite):
+    """Funcion que llevara a cabo el proceso del Metodo de la secante"""
     # Variable auxiliar
     cont = 0
 
