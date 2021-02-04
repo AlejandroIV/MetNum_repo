@@ -1,6 +1,7 @@
 import Metodo_de_Biseccion
 import Metodo_de_la_Falsa_Posicion
 import Metodo_de_Newton_Raphson
+import Metodo_de_la_Secante
 
 opcion = 1
 
@@ -27,7 +28,7 @@ while opcion != 0:
     elif(opcion == 3):
         Metodo_de_Newton_Raphson.Metodo_Newton_Raphson(expr)
     elif(opcion == 4):
-        print("Metodo de la secante")
+        Metodo_de_la_Secante.Metodo_Secante(expr)
 
     while True:
         opcion = int(input("Desea continuar?\nSi - 1\nNo - 0\n"))
