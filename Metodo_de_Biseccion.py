@@ -67,7 +67,7 @@ def Biseccion(xInf, xSup, tolerancia, limite):
             sys.exit(1)
 
     print("-" * 111)
-    print("\nSe contaron ", cont, "iteraciones")
+    print("\nSe contaron ", cont, "iteraciones\n")
 
     return xr
 

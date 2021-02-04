@@ -62,7 +62,7 @@ def Newton_Raphson(xr, tolerancia, limite):
             sys.exit(1)
 
     print("-" * 93)
-    print("\nSe contaron ", cont, "iteraciones")
+    print("\nSe contaron ", cont, "iteraciones\n")
 
     return xr
 
