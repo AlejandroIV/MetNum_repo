@@ -1,4 +1,4 @@
-"""Modulo que contiene las funciones necesarias para preparar el codigo para el modulo 'Met1_PuntoFijo.py'"""
+"""Modulo que contiene las funciones necesarias para preparar el codigo para el modulo 'Met2_Newton.py'"""
 
 from sage.all import *
 import sys
@@ -14,24 +14,26 @@ def Llenar_Vector_Funciones(nombreArchTxt):
         print("Crea un archivo de texto nuevo e ingresa las funciones ahí, guardalo con el formato 'txt' vuelve a correr el programa\n")
         sys.exit(1)
 
-    contFun = 0
-    # Bucle que recorre todo el archivo y cuenta cuantas expresiones hay en el archivo
-    for parr in archFun:
-        contFun += 1
-
-    # Crea vector que contendra las expresiones que escriba el usuario en el archivo de texto
-    matFun = np.empty((contFun, 1), dtype = type(SR()))
-
-    # Regresa al principio del documento
-    archFun.seek(0)
-
-    contFun = 0
-    # Bucle que recorre todo el archivo para extraer las expresiones que aparecen despues del signo '=' en cada linea
+    # Bucle que recorre el archivo para extraer lo que aparece despues del signo '=' en el archivo de texto
     for linea in archFun:
         indIn = linea.find("=")
-        # Intenta pasar cada linea del archivo de texto a formato de funciones de sagemath
+        funciones = linea[(indIn + 1):]
+    # Elimina las llaves que hay en la cadena
+    indLlave1 = funciones.find("[")
+    indLlave2 = funciones.find("]")
+    funciones = funciones[(indLlave1 + 1):indLlave2]
+
+    # Separa las funciones delimitadas por comas
+    funciones = funciones.split(',')
+
+    # Crea vector que contendra las expresiones que escriba el usuario en el archivo de texto
+    matFun = np.empty((len(funciones), 1), dtype = type(SR()))
+
+    contFun = 0
+    # Recorre la lista de funciones, intenta convertir a formato de funciones de sagemath y las almacena en el vector de funciones
+    for funcion in funciones:
         try:
-            matFun[contFun, 0] = SR(linea[(indIn + 1):])
+            matFun[contFun, 0] = SR(funcion)
         except:
             print("\nNo ha sido posible convertir alguna de las expresiones en un formato compatible con el programa")
             print("Revise la documentacion de SageMath para ver como se pueden ingresar las expresiones\n")
@@ -53,20 +55,19 @@ def Identificar_Variables(nombreArchTxt):
         print("Crea un archivo de texto nuevo e ingresa las funciones ahí, guardalo con el formato 'txt' vuelve a correr el programa\n")
         sys.exit(1)
 
-    # Crea la lista que contendra los nombres de las variables
-    listaVar = []
-
-    # Bucle que recorre todo el archivo para extraer las variables
+    # Bucle que recorre el archivo para extraer lo que aparece antes del signo '=' en el archivo de texto
     for linea in arch:
         indIn = linea.find("=")
-        # Intenta pasar cada linea del archivo de texto a formato de funciones de sagemath
-        try:
-            listaVar.append(linea[:(indIn + 1)])
-        except:
-            print("\nNo ha sido posible identificar las variables en el archivo de texto")
-            print("Asegurese de escribir en el archivo de texto lo siguiente:")
-            print("'Nombre de variable' = 'Expresion'\n")
-            sys.exit(1)
+        listaVar = linea[:(indIn)]
+
+    # Elimina los parentesis de la cadena
+    listaVar = listaVar.replace(" ", "")
+    indParent1 = listaVar.find("(")
+    indParent2 = listaVar.find(")")
+    listaVar = listaVar[(indParent1 + 1):indParent2]
+
+    # Separa las variables delimitadas por comas
+    listaVar = listaVar.split(',')
 
     print("\nSe han identificado las siguientes variables: ", end = "")
     # Bucle que imprimira las variables que se han identificado
@@ -82,20 +83,19 @@ def Identificar_Variables(nombreArchTxt):
         sys.exit(1)
 
     cont = 0
-
     # Bucle que recorrera la lista de variables y le pedira un valor al usuario
     for var in listaVar:
         valIn = input(f"Ingresa el valor para la variable {listaVar[cont][0]}: ")
-        listaVar[cont] = listaVar[cont] + " " + valIn
+        listaVar[cont] = listaVar[cont][0] + "=" + valIn
         cont += 1
 
     return listaVar
 
-def Escribir_Programa(listaVariables):
+def Escribir_Programa(listaVariables, opcion):
     # Abre el archivo de texto con el codigo en modo lectura
-    fin = open("Mets5_SolNumEcNoLin/Met_Punto_Fijo/Codigo.txt", "r")
+    fin = open("Mets5_SolNumEcNoLin/Met_Newton/Codigo.txt", "r")
     # Abre el archivo '.py' para escribir el codigo en modo escritura
-    fout = open("Mets5_SolNumEcNoLin/Met1_PuntoFijo.py", "w")
+    fout = open("Mets5_SolNumEcNoLin/Met2_Newton.py", "w")
 
     contLinea = 0
     # Bucle que recorre todas las lineas del documento de texto
@@ -106,25 +106,54 @@ def Escribir_Programa(listaVariables):
             for elemento in listaVariables:
                 indiceIn = elemento.find("=")
                 cadena += f"{elemento[(indiceIn + 1):]},"
-            cadena += "])\n"
+            cadena = cadena[:(len(cadena) - 1)] + "], dtype = 'f')\n"
+            fout.write(cadena)
+        # Agrega la segunda fila que se debe modificar
+        elif linea.startswith("SEGUNDA2"):
+            cadena = "    "
+            for elemento in listaVariables:
+                cadena += f"{elemento[0]},"
+            cadena = cadena[:(len(cadena) - 1)]
+            cadena += " = var("
+            for elemento in listaVariables:
+                cadena += f"'{elemento[0]}',"
+            cadena = cadena[:(len(cadena) - 1)]
+            cadena += ")\n"
+            fout.write(cadena)
+        # Agrega la tercera fila que se debe modificar
+        elif linea.startswith("TERCERA3"):
+            cadena = "        filaJac = jacobian(funcion[0], ("
+            for elemento in listaVariables:
+                cadena += f"{elemento[0]},"
+            cadena = cadena[:(len(cadena) - 1)]
+            cadena += "))\n"
             fout.write(cadena)
         # Agrega las sentencias que se deben modificar
         elif linea.startswith("SENTENCIAS1"):
             cadena = "    print('-' * (15 * vectSol.shape[0]))\n"
             for elemento in listaVariables:
-                cadena += f"    print((' ' * 5) + '"
-                cadena += f"{elemento[0]}"
-                cadena += "' + (' ' * 4), sep = '', end = '')\n"
+                cadena += f"    print((' ' * 5) + '{elemento[0]}' + (' ' * 4), sep = '', end = '')\n"
             cadena += "    print((' ' * 6) + 'error')\n"
             fout.write(cadena)
-        # Agrega la segunda fila que se debe modificar
-        elif linea.startswith("SEGUNDA2"):
-            contAux = 0
-            cadena = "            vectSol[cont] = vectFun[cont, 0].subs("
+        # Agrega la cuarta fila que se debe modificar
+        elif linea.startswith("CUARTA4"):
+            cadena = f"                    mtrzY[cont1, cont2] = (-1 ** {opcion}) * (vectFun[cont1][0].subs("
+            cont = 0
             for elemento in listaVariables:
-                cadena += f"{elemento[0]} = "
-                cadena += f"vectSol[{contAux}], "
-                contAux += 1
+                indiceIn = elemento.find("=")
+                cadena += f"{elemento[0]} = vectSol[{cont}, 0],"
+                cont += 1
+            cadena = cadena[:(len(cadena) - 1)]
+            cadena += "))\n"
+            fout.write(cadena)
+        elif linea.startswith("QUINTA5"):
+            cadena = "                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs("
+            cont = 0
+            for elemento in listaVariables:
+                indiceIn = elemento.find("=")
+                cadena += f"{elemento[0]} = vectSol[{cont}, 0],"
+                cont += 1
+            cadena = cadena[:(len(cadena) - 1)]
             cadena += ")\n"
             fout.write(cadena)
         else:
@@ -135,5 +164,5 @@ def Escribir_Programa(listaVariables):
     fout.close()
 
 if __name__ == "__main__":
-    Llenar_Vector_Funciones()
-    Escribir_Programa()
+    print(Llenar_Vector_Funciones("FunMul"))
+    print(Identificar_Variables("FunMul"))  
