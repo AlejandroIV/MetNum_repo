@@ -7,7 +7,7 @@ from Mets5_SolNumEcNoLin.Met_Newton.Preparar_Programa import Llenar_Vector_Funci
 from Mets5_SolNumEcNoLin.Met_Newton import Met_Jacobi
 
 def Metodo_Newton(tolerancia, limite, nombre, opcion):
-    """Funcion que llevara a cabo el Metodo del Punto Fijo"""
+    """Funcion que llevara a cabo el Metodo de Newton"""
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
     # Despues crea un vector de flotantes que contendra los valores de las variables dados por el usuario   

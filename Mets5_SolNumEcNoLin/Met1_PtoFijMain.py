@@ -1,4 +1,4 @@
-"""Modulo que coordina pide los datos al usuario para poder correr el programa que contiene el Metodo del Punto Fijo"""
+"""Modulo que coordina: pide los datos al usuario para poder correr el programa que contiene el Metodo del Punto Fijo"""
 
 from Mets5_SolNumEcNoLin.Met_Punto_Fijo.Preparar_Programa import Identificar_Variables, Escribir_Programa
 

@@ -1,4 +1,4 @@
-"""Modulo que coordina pide los datos al usuario para poder correr el programa que contiene el Metodo de Newton"""
+"""Modulo que coordina: pide los datos al usuario para poder correr el programa que contiene el Metodo de Newton"""
 
 from Mets5_SolNumEcNoLin.Met_Newton.Preparar_Programa import Identificar_Variables, Escribir_Programa
 
