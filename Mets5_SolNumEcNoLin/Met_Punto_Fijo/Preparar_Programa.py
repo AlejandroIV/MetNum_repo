@@ -106,7 +106,9 @@ def Escribir_Programa(listaVariables):
             for elemento in listaVariables:
                 indiceIn = elemento.find("=")
                 cadena += f"{elemento[(indiceIn + 1):]},"
-            cadena += "])\n"
+            cadena = cadena[:(len(cadena) - 1)]
+            cadena += "]"
+            cadena += ", dtype = 'f')\n"
             fout.write(cadena)
         # Agrega las sentencias que se deben modificar
         elif linea.startswith("SENTENCIAS1"):
@@ -124,6 +126,7 @@ def Escribir_Programa(listaVariables):
             for elemento in listaVariables:
                 cadena += f"{elemento[0]} = "
                 cadena += f"vectSol[{contAux}], "
+                cadena = cadena[:(len(cadena) - 1)]
                 contAux += 1
             cadena += ")\n"
             fout.write(cadena)
