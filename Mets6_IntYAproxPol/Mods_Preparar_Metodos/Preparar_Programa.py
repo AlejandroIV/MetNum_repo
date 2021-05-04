@@ -4,8 +4,8 @@ from sage.all import *
 import sys
 import numpy as np
 
-def LLenar_Vector_Datos(nombreArchTxt):
-    """Funcion que lee un archivo de texto, extrae los datos ingresados y las almacena en un vector columna"""
+def LLenar_Matriz_Datos(nombreArchTxt):
+    """Funcion que lee un archivo de texto, extrae los datos ingresados y las almacena en una matriz"""
     try:
         archDts = open(f"{nombreArchTxt}.txt", "r")
     except:
@@ -49,7 +49,7 @@ def LLenar_Vector_Datos(nombreArchTxt):
     # Regresa la matriz con los datos leidos desde el archivo de texto
     return matDts
 
-def Opciones(matDats):
+def OpcionesLag(matDats):
     """Funcion que pedira al usuario elegir una opcion en la que se aplica la formula de lagrange"""
     # Pide al usuario que elija una de las siguientes opciones
     print("\n1.- Construir el Polinomio Interpolante de Lagrange")
@@ -118,6 +118,23 @@ def Opciones(matDats):
     #    print("Neville")
 
     return indicesFilas
+
+def OpcionesDifDiv():
+    """Funcion que pedira al usuario elegir una opcion en la que se aplican las diferencias divididas"""
+    # Pide al usuario que elija una de las siguientes opciones
+    print("\n1.- Construir el Polinomio Interpolante de Newton")
+    print("2.- Aproximar la funcion en un punto usando las Diferencias Divididas")
+
+    while True:
+        try:
+            op = int(input("\nElija una opcion: "))
+            if op > 0 and op < 3:
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    return op
 
 if __name__ == "__main__":
     print(LLenar_Vector_Datos("prueba"))

@@ -3,16 +3,16 @@
 from sage.all import *
 import sys
 import numpy as np
-from Mets6_IntYAproxPol.Met_InterpolacionLagrange.Preparar_Programa import LLenar_Vector_Datos, Opciones
+from Mets6_IntYAproxPol.Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, OpcionesLag
 
 def Interpolacion_Lagrange(nombre):
     """Funcion que construira el Polinomio Interpolante de Lagrange"""
     # Primero llena una matriz con los datos contenidos en el documento de texto
-    matDatos = LLenar_Vector_Datos(nombre)
+    matDatos = LLenar_Matriz_Datos(nombre)
 
     # Manda a llamar a la funcion 'Opciones' para pedir al usuario que elija una opcion para usar la formula de lagrange, saber cuales son
     # los datos que el usuario desea elegir y para almacenar los indices de las filas de 'matDatos' que se van a usar en 'indicesDatos'
-    indicesDatos = Opciones(matDatos)
+    indicesDatos = OpcionesLag(matDatos)
 
     # Revisa el contenido del primer elemento de 'indicesDatos' para saber que opcion eligio el usuario
     if indicesDatos[0] == 1 or indicesDatos[0] == 2:  # Construye el Polinomio Interpolante de Lagrange

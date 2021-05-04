@@ -2,6 +2,7 @@ from Mets5_SolNumEcNoLin.Met1_PtoFijMain import Punto_Fijo
 from Mets5_SolNumEcNoLin.Met2_NewMain import Newton
 from Mets5_SolNumEcNoLin.Met3_BroyMain import Broyden
 from Mets6_IntYAproxPol.Met1_PolInterLagMain import Lagrange
+from Mets6_IntYAproxPol.Met2_DifDivMain import DiferenciasDivididas
 
 print("\nMetodos Numericos II\n")
 print("1.- Menu de los metodos para aproximar las soluciones en un sistema de ecuaciones no lineales")
@@ -52,8 +53,8 @@ elif opcion == 2:
     print("\nMetodos numericos de interpolacion y aproximacion polinomial\n")
     print("Interpolacion polinomial")
     print("1.- Fomula de Lagrange")
-    print("2.- Diferencias divididas - NO DISPONIBLE")
-    print("3.- Formula de Interpolacion de Newton - NO DISPONIBLE")
+    print("2.- Diferencias divididas")
+    print("3.- Formula de Interpolacion de Newton: hacia adenlante y hacia atras - NO DISPONIBLE")
     print("4.- Metodo de Hermite - NO DISPONIBLE")
 
     while True:
@@ -70,6 +71,12 @@ elif opcion == 2:
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
         Lagrange()
+
+    if opcion == 2:
+        print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
+        print("(x_0,y_0) (x_1,y_1) ...")
+        print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
+        DiferenciasDivididas()
 
     else:
         print("\n\nEN PROCESO")
