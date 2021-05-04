@@ -72,7 +72,7 @@ def Interpolacion_Diferencias_Divididas(nombre):
             print("Desea simplificar? Si - 1, No - 2: ", end = '')
             try:
                 opcion = int(input())
-                if opcion > 0 and opcion < 3:  # Aqui va un '4' si se programa el metodo de Neville y se descomentan las lineas para correrlo
+                if opcion > 0 and opcion < 3:
                     print()
                     break
                 print("Opcion invalida!!!")
