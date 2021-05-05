@@ -10,7 +10,7 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
     # Despues crea un vector de flotantes que contendra los valores de las variables dados por el usuario   
-    vectSol = np.array([1,3,5], dtype = 'f')
+    vectSol = np.array([1,2,3], dtype = 'f')
     vectSol = np.reshape(vectSol, (vectSol.shape[0], 1))
     # Declara las variables para poder calcular el jacobiano
     x,y,z = var('x','y','z')
@@ -152,6 +152,7 @@ def Metodo_Broyden(tolerancia, limite, nombre):
 def Broy(FNombre):
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
+    print()
     print(Metodo_Broyden(error, lim, FNombre))
 
 if __name__ == "__main__":
