@@ -136,5 +136,48 @@ def OpcionesDifDiv():
 
     return op
 
+def OpcionesNet():
+    """Funcion que pedira al usuario elegir una opcion en la que se aplica la interpolacion de newton"""
+    # Pide al usuario que lija una de las siguientes opciones
+    print("\n1.- Aplicar la Formula de Interpolacion de Newton hacia adelante")
+    print("2.- Aplicar la Formula de Interpolacion de Newton hacia atras")
+
+    while True:
+        try:
+            op = int(input("\nElija una opcion: "))
+            if op > 0 and op < 3:
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    return op
+
+def Modificar_Matriz(matriz):
+    """Funcion que modifica la matriz para poder aplicar la formula de interpolacion de newton hacia atras"""
+    # Se crea una matriz auxiliar para ir almacenando los datos de la matriz en forma modificada
+    matAux = np.empty((matriz.shape[0], 1), dtype = 'f')
+    # Crea un vector auxiliar para ir almacenando las columnas modificadas de la matriz
+    vectAux = np.empty((matriz.shape[0], 1), dtype = 'f')
+    # Contador auxiliar que se usara para saber hasta que fila recorrer de la matriz
+    contAux = matriz.shape[1] - 2
+    # Bucle que recorrera las columnas de la matriz, las modificara y las almacenara en 'matAux'
+    for iteracion in range(matriz.shape[1] - 2):
+        # Variable que se usara para indexar a 'vectAux'
+        indexAux = 0
+        # Bucle que llenara de ceros las primeras filas de 'vectAux'
+        for cero in (range(iteracion + 1)):
+            vectAux[cero, 0] = 0
+            indexAux += 1
+
+        vectAux[indexAux:, 0] = matriz[:(matriz.shape[0] - indexAux), (iteracion + 2)]
+        # Agrega la columna que se calculo a la matriz auxiliar
+        matAux = np.append(matAux, vectAux, axis = 1)
+
+    # Actualiza la matriz a su forma modificada
+    matriz = np.append(matriz[:, :2], matAux[:, 1:], axis = 1)
+
+    return matriz
+
 if __name__ == "__main__":
     print(LLenar_Vector_Datos("prueba"))

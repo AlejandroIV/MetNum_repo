@@ -1,4 +1,4 @@
-"""Modulo que contiene el codigo para construir el Polinomio Interpolante de Lagrange y el Método de Neville"""
+"""Modulo que contiene el codigo para construir el Polinomio Interpolante de Newton"""
 
 from sage.all import *
 import sys
@@ -6,7 +6,7 @@ import numpy as np
 from Mets6_IntYAproxPol.Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, OpcionesDifDiv
 
 def Interpolacion_Diferencias_Divididas(nombre):
-    """Funcion que construira el Polinomio Interpolante de Lagrange"""
+    """Funcion que construira el Polinomio Interpolante de Newton"""
     # Primero llena una matriz con los datos contenidos en el documento de texto
     matDatos = LLenar_Matriz_Datos(nombre)
 
@@ -16,7 +16,7 @@ def Interpolacion_Diferencias_Divididas(nombre):
     cont1 = 1
     # Bucle que se repetira hasta calcular la ultima diferencia dividida posible
     for diferenciaDividida in range(matDatos.shape[0] - 1):
-        # Contador que se va a usar para saber que fila de 'matDatos' se va a utilizar para calcular el denominador y el sustraendo del denominador
+        # Contador que se va a usar para saber que fila de 'matDatos' se va a utilizar para calcular el sustraendo del denominador
         cont2 = 0  # Este contador tambien se va a utilizar para indexar a 'vectResultadosAux'
         # Bucle que calcula los elementos de la tabla de diferencias divididas
         for elemRengl in range(cont1, matDatos.shape[0]):
@@ -35,14 +35,26 @@ def Interpolacion_Diferencias_Divididas(nombre):
         # Agrega la columna que se calculo a la matriz
         matDatos = np.append(matDatos, vectResultadosAux, axis = 1)
         
-    np.set_printoptions(precision = 8, suppress = True)
+    np.set_printoptions(precision = 6, suppress = True)
+
+    print(f"\n{matDatos}\n")
+
+    # Pide al usuario el grado del polinomio
+    while True:
+        try:
+            num = int(input("Ingrese el grado del polinomio que quiera usar para el calculo: "))
+            if num > 0 and num < (matDatos.shape[1] - 1):
+                break
+            print("Entrada invalida")
+        except:
+            print("Entrada invalida")
     
     # Crea la variable que contendra el polinomio en formato'str'
     polinomio = ''
     # Lista que contendra los terminos lineales
     terLin = []
     # Bucle que construye el polinomio usando como coeficientes los elementos de la primera fila de la matriz
-    for coeficientes in range(matDatos.shape[1] - 1):
+    for coeficientes in range(num + 1):
         polinomio += f"({round(matDatos[0, (coeficientes + 1)], 8)}"
         if coeficientes == 0:
             polinomio += ")+"
@@ -57,7 +69,7 @@ def Interpolacion_Diferencias_Divididas(nombre):
         # Agrega un nuevo termino a la lista de terminos lineales
         terLin.append(f"(x - {round(matDatos[coeficientes, 0], 6)})")
 
-        cont1 += 1
+        cont1 += 1  # No se usa BORRAR
 
     # Elimina el ultimo signo '+' que esta en la cadena que contiene el polinomio
     polinomio = polinomio[:(len(polinomio) - 1)]
@@ -85,7 +97,6 @@ def Interpolacion_Diferencias_Divididas(nombre):
 
             # Simplifica el polinomio resultante y lo imprime
             print(f"\nEl Polinomio Interpolante es: {polinomio.simplify_full()}\n")
-
 
     else:  # Sustituye el punto que se quiere calcular por las 'x' que aparecen en la cadena de caracteres que contiene el polinomio
         x = float(input("\nIngresa una abscisa: "))  # Pide al usuario una abscisa
