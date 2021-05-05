@@ -96,7 +96,7 @@ def Interpolacion_Diferencias_Divididas(nombre):
             polinomio = SR(polinomio)
 
             # Simplifica el polinomio resultante y lo imprime
-            print(f"\nEl Polinomio Interpolante es: {polinomio.simplify_full()}\n")
+            print(f"\n\nEl Polinomio Interpolante es: {polinomio.simplify_full()}\n")
 
     else:  # Sustituye el punto que se quiere calcular por las 'x' que aparecen en la cadena de caracteres que contiene el polinomio
         x = float(input("\nIngresa una abscisa: "))  # Pide al usuario una abscisa

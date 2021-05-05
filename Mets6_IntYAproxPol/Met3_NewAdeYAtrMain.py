@@ -99,7 +99,7 @@ def Interpolacion_Newton_Adelante_Atras(nombre):
     # Sustituye 's' por el valor que se calculo
     polinomio = polinomio.replace('s', f"({str(s)})")
 
-    print(polinomio)
+    print(f"\nEl Polinomio Interpolante es: {polinomio}")
 
     polinomio = SR(polinomio)
 
