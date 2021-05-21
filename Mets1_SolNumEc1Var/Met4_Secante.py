@@ -1,18 +1,14 @@
 """Modulo que contiene el Metodo de la Secante"""
 
-import math as m
 import sys
 import sympy as sp
 
-# Declaracion de la variable simbolica
-x = sp.symbols('x')
-
-def Funcion(n):
-    """Definicion de la funcion 'f de x'"""
-    return float(fun.subs(x, n))
-
-def Secante(x, incremento, tolerancia, limite):
+def Secante(expresion, xr, incremento, tolerancia, limite):
     """Funcion que llevara a cabo el proceso del Metodo de la secante"""
+    # Declaracion de la variable simbolica
+    x = sp.symbols('x')
+    # Convierte a la funcion a formato sympy
+    fun = sp.sympify(expresion)
     # Variable auxiliar
     cont = 0
 
@@ -20,27 +16,27 @@ def Secante(x, incremento, tolerancia, limite):
     print("|{:^8}|{:^12}|{:^30}|{:^31}|".format("x", "f(x)", "xr = (inc*fx)/(f(x+inc)-fx)", f"|f(xr)| < {tolerancia}"))
     print("-" * 86)
 
+    # Bucle que se repetira hasta que se encuentre una aproximacion de la raiz o hasta que el se llegue al limite de iteraciones
     while(True):
-        # Evalua las funciones en 'x = n'
-        f_x = Funcion(x)
+        p = xr
+        # Evalua las funciones en 'x = p'
+        f_x = float(fun.subs(x, p))
 
-        xr = x - ((incremento * f_x) / (Funcion(x + incremento) - f_x))
+        xr = xr - ((incremento * f_x) / (float(fun.subs(x, (xr + incremento))) - f_x))
+
+        cont += 1
 
         # Evalua la funcion en la raiz estimada
-        f_xr = Funcion(xr)
+        f_xr = float(fun.subs(x, xr))
 
         # Asignacion de valores a variables auxiliares para imprimirlos
         aux = abs(f_xr) <= tolerancia
 
-        print("|{:^8}|{:^12}|{:^30}|{:^18} - {:^10}|".format(round(x, 4), round(f_x, 8), round(xr, 4), round(abs(f_xr), 8), bool(aux)))
-
-        cont += 1
+        print("|{:^8}|{:^12}|{:^30}|{:^18} - {:^10}|".format(round(p, 4), round(f_x, 8), round(xr, 4), round(abs(f_xr), 8), bool(aux)))
 
         # Condicionales que sirven como criterio de terminacion para terminar los calculos
         if abs(f_xr) <= tolerancia:
             break
-        else:
-            x = xr
 
         if cont == limite:
             # En caso que se hayan hecho 'x' iteraciones, entonces suponemos que
@@ -57,9 +53,6 @@ def Secante(x, incremento, tolerancia, limite):
 
 def Metodo_Secante(expr):
     print("\n\nMetodo de la Secante\n")
-    # Convierte a la funcion a formato sympy
-    global fun
-    fun = sp.sympify(expr)
 
     # Pide al usuario los valores necesarios para el metodo
     x1 = float(input("Ingrese un valor inicial: "))
@@ -68,9 +61,9 @@ def Metodo_Secante(expr):
     limite = int(input("Ingrese el limite de iteraciones: "))
     print()
 
-    xr = Secante(x1, incr, error, limite)
+    xr = Secante(expr, x1, incr, error, limite)
 
-    print("La posible raiz es:", xr)
+    print("\nUna aproximacion a la raiz es:", xr, "\n")
 
 if __name__ == "__main__":
     expr = input("\nIntroduce la funcion en terminos de x: ")

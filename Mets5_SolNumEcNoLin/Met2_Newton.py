@@ -11,17 +11,17 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
     # Despues crea un vector de flotantes que contendra los valores de las variables dados por el usuario   
-    vectSol = np.array([1,2,3], dtype = 'f')
+    vectSol = np.array([3,4,7,1], dtype = 'f')
     vectSol = np.reshape(vectSol, (vectSol.shape[0], 1))
     # Declara las variables para poder calcular el jacobiano
-    x,y,z = var('x','y','z')
+    w,x,y,z = var('w','x','y','z')
 
     # Crea la matriz que contendra el jacobiano de las funciones
     matJac = np.empty(0, dtype = type(SR()))
     # Bucle que recorre todo el vector de funciones para calcular la matriz jacobiana y almacenarla en matJac
     for funcion in vectFun:
         # Ira calculando el jacobiano de cada fila
-        filaJac = jacobian(funcion[0], (x,y,z))
+        filaJac = jacobian(funcion[0], (w,x,y,z))
         # Bucle que ira agregando las funciones una por una para separarlas
         for derPar in filaJac[0]:
             matJac = np.append(matJac, derPar)
@@ -42,6 +42,7 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
     matIter = np.append(matIter, 0)
 
     print('-' * (15 * vectSol.shape[0]))
+    print((' ' * 5) + 'w' + (' ' * 4), sep = '', end = '')
     print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
     print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
     print((' ' * 5) + 'z' + (' ' * 4), sep = '', end = '')
@@ -56,9 +57,9 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
             for cont2 in range(matJac.shape[0] + 1):
                 # Cuando se cumple la condicion quiere decir que ahora hay que considerar la funcion del vector de funciones con signo negativo
                 if cont2 == matJac.shape[0]:
-                    mtrzY[cont1, cont2] = (-1 ** 2) * (vectFun[cont1][0].subs(x = vectSol[0, 0],y = vectSol[1, 0],z = vectSol[2, 0]))
+                    mtrzY[cont1, cont2] = (-1 ** 2) * (vectFun[cont1][0].subs(w = vectSol[0, 0],x = vectSol[1, 0],y = vectSol[2, 0],z = vectSol[3, 0]))
                     continue
-                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs(x = vectSol[0, 0],y = vectSol[1, 0],z = vectSol[2, 0])
+                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs(w = vectSol[0, 0],x = vectSol[1, 0],y = vectSol[2, 0],z = vectSol[3, 0])
 
         if opcion == 1:
             # Manda a llamar a la funcion "Jacobi" para resolver el sistema de ecuaciones

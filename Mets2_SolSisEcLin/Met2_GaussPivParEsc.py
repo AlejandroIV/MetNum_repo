@@ -3,7 +3,7 @@
 import numpy as np
 
 def Metodo_Gauss_PivParEsc(orden):
-    """Funcion que llevara a cabo el Metodo de Eliminacion Gaussiana con Pivoteo Parcial"""
+    """Funcion que llevara a cabo el Metodo de Eliminacion Gaussiana con Pivoteo Parcial Escalonado"""
     # Crea una matriz sin valores asignados para almacenar numeros de tipo 'float'
     A = np.empty((orden, orden + 1), dtype = 'f')
 

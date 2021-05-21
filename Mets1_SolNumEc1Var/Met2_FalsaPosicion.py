@@ -1,35 +1,30 @@
 """Modulo que contiene el Metodo de la Falsa Posicion"""
 
-import math as m
 import sys
 import sympy as sp
 
-# Declaracion de variable simbolica
-x = sp.symbols('x')
-
-def Funcion(n):
-    """Definicion de la funcion "f de x"""
-    return float(fun.subs(x, n))
-
-def Falsa_Posicion(xInf, xSup, tolerancia, limite):
+def Falsa_Posicion(expresion, xInf, xSup, tolerancia, limite):
     """Funcion que llevara a cabo el proceso del Metodo de la Falsa Posicion"""
+    # Declaracion de variable simbolica
+    x = sp.symbols('x')
+    # Convierte la funcion a formato sympy
+    fun = sp.sympify(expresion)
     # Variables auxiliares
     cont = 0
     il = 0
     iu = 0
 
     # Evalua la funcion en "xInf" y "xSup" el valor los almacena en "f_xInf" y en "f_xSup" correspondientemente
-    f_xInf = Funcion(xInf)
-    f_xSup = Funcion(xSup)
+    f_xInf = float(fun.subs(x, xInf))
+    f_xSup = float(fun.subs(x, xSup))
 
     print("-" * 127)
     print("|{:^8}|{:^8}|{:^12}|{:^12}|{:^28}|{:^20}|{:^31}|".format("a", "b", "f(a)", "f(b)", "x = b-((fb*(a-b))/(fa-fb))", "f(a) * f(x) < 0",
     f"|f(x)| < {tolerancia}"))
     print("-" * 127)
 
-    # Bucle que se repetira hasta que se encuentre la raiz
+    # Bucle que se repetira hasta que se encuentre una aproximacion de la raiz o hasta que el se llegue al limite de iteraciones
     while True:
-
         if il >= 2:
             # Si la variable "il" es igual o mayor a dos significa que se han sobrepasado el limite
             # de iteraciones y se debe ejecutar la siguinte sentencia para que el metodo sea mas ediciente
@@ -38,11 +33,11 @@ def Falsa_Posicion(xInf, xSup, tolerancia, limite):
             # De manera anñaloga que con el caso anterior (mas informacion en pagina 108 del Chapra)
             f_xSup /= 2
 
-        # Valor medio del intervalo
+        # Formula para determinar 'xr'
         xr = xSup - ((f_xSup * (xInf - xSup)) / (f_xInf - f_xSup))
 
-        # Evalua la funcion en "xr" el valor en "f_xr"
-        f_xr = Funcion(xr)
+        # Evalua la funcion en "xr" y almacena el valor en "f_xr"
+        f_xr = float(fun.subs(x, xr))
 
         # Incrementa el contador de interacciones
         cont += 1
@@ -58,7 +53,7 @@ def Falsa_Posicion(xInf, xSup, tolerancia, limite):
         if (f_xInf * f_xr) < 0:
             # La raiz se encuentra dentro del subintervalo inferior o izquierdo
             xSup = xr
-            f_xSup = Funcion(xSup)
+            f_xSup = f_xr
             # Reestablece el valor de la otra variable auxiliar para que empiece otro conteo
             iu = 0
             # Se incrementa el valor de la variable auxiliar para saber si se tiene que dividir el intervalo
@@ -66,7 +61,7 @@ def Falsa_Posicion(xInf, xSup, tolerancia, limite):
         elif (f_xInf * f_xr) > 0:
             # La raiz se encuentra dentro del subintervalo superior o derecho
             xInf = xr
-            f_xInf = Funcion(xInf)
+            f_xInf = f_xr
             # Reestablece el valor de la otra variable auxiliar para que empiece otro conteo
             il = 0
             # Se incrementa el valor de la variable auxiliar para saber si se tiene que dividir el intervalo
@@ -81,7 +76,7 @@ def Falsa_Posicion(xInf, xSup, tolerancia, limite):
         elif abs(f_xInf) <= tolerancia:
             xr = xInf
             break
-        elif abs(Funcion(xSup)) <= tolerancia:
+        elif abs(float(fun.subs(x, xSup))) <= tolerancia:
             xr = xSup
             break
 
@@ -101,20 +96,17 @@ def Falsa_Posicion(xInf, xSup, tolerancia, limite):
 
 def Metodo_Falsa_Posicion(expr):
     print("\n\nMetodo de la falsa posicion\n")
-    # Convierte la funcion a formato sympy
-    global fun
-    fun = sp.sympify(expr)
 
     # Pide al usuario los valores necesarios para el metodo
     x1 = float(input("Ingrese un valor inicial inferior: "))
     x2 = float(input("Ingrese un valor final superior: "))
-    error = float(input("Ingrese el error de tolerancia (en porcentaje): "))
+    error = float(input("Ingrese el error de tolerancia: "))
     limite = int(input("Ingrese el limite de iteraciones: "))
     print()
 
-    xr = Falsa_Posicion(x1, x2, error, limite)
+    xr = Falsa_Posicion(expr, x1, x2, error, limite)
 
-    print("\nLa posible raiz es:", xr, "\n")
+    print("\nUna aproximacion a la raiz es:", xr, "\n")
 
 if __name__ == "__main__":
     expr = input("\nIntroduce la funcion en terminos de x: ")

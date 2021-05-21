@@ -2,7 +2,6 @@
 
 from ModulosAdicionales import MatDiagDom
 import numpy as np
-import math
 import sys
 
 def GaussSeidel(orden, tolerancia, limite, A, x, relajacion, w):
@@ -28,10 +27,7 @@ def GaussSeidel(orden, tolerancia, limite, A, x, relajacion, w):
     c = np.copy(A[:, orden:])
 
     # Sentencias para calcular la norma de 'x'
-    normaX1 = 0
-    for elem in range(orden):
-        normaX1 += x[elem] * x[elem]
-    normaX1 = math.sqrt(normaX1)
+    normaX1 = np.linalg.norm(x)
 
     cont = 0
 
@@ -43,7 +39,7 @@ def GaussSeidel(orden, tolerancia, limite, A, x, relajacion, w):
         print("    x", (cantElem + 1), "    ", sep = "", end = "")
     print("   error")
 
-    # Bucle que se repetira hasta que el error sea menor o igual al permitido
+    # Bucle que se repetira hasta que el error sea menor o igual al permitido o hasta que se llegue al limite de iteraciones
     while True:
         # Condicional que se ejecutara en caso de que el usuario haya decidido usar la iteracion SOR
         if relajacion:
@@ -63,10 +59,7 @@ def GaussSeidel(orden, tolerancia, limite, A, x, relajacion, w):
         matIter = np.append(matIter, x)
 
         # Sentencias para calcular la norma de 'x'
-        normaX2 = 0
-        for elem in range(orden):
-            normaX2 += x[elem] * x[elem]
-        normaX2 = math.sqrt(normaX2)
+        normaX2 = np.linalg.norm(x)
 
         # Calcula el error aproximado porcentual y almacena el resultado en la variable 'errorAproxPorcen'
         errorAproxPorcen = ((normaX2 - normaX1) / normaX2) * 100
@@ -118,7 +111,7 @@ def Metodo_de_GaussSeidel(orden):
         vectorIn[comp] = float(input(f"Ingrese la componente {comp + 1} del vector: "))
 
     # Pide al usuario los valores necesarios para el metodo
-    error = float(input("Ingrese el error de tolerancia: "))
+    error = float(input("Ingrese el error de tolerancia (porcentaje): "))
     limite = float(input("Ingrese el limite de iteraciones: "))
     relajacion = int(input("Quiere utilizar la iteracion SOR?\n0 - No   1 - Si: "))
     relajacion = bool(relajacion)

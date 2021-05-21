@@ -1,4 +1,4 @@
-from Mets1_SolNumEc1Var import Met1_Biseccion, Met2_FalsaPosicion, Met3_Secante, Met4_NewtonRaphson
+from Mets1_SolNumEc1Var import Met1_Biseccion, Met2_FalsaPosicion, Met3_NewtonRaphson, Met4_Secante
 from Mets2_SolSisEcLin import Met1_GaussPivPar, Met2_GaussPivParEsc, Met3_Jacobi, Met4_GaussSeidel
 from Mets3_FactLU import Met1_Cholesky
 
@@ -40,9 +40,9 @@ while opcion != 0:
         elif opcion == 2:
             Met2_FalsaPosicion.Metodo_Falsa_Posicion(expr)
         elif opcion == 3:
-            Met3_Secante.Metodo_Newton_Raphson(expr)
+            Met3_NewtonRaphson.Metodo_Newton_Raphson(expr)
         elif opcion == 4:
-            Met4_NewtonRaphson.Metodo_Secante(expr)
+            Met4_Secante.Metodo_Secante(expr)
 
     elif opcion == 2:
         # Pide al usuario la cantidad de ecuaciones

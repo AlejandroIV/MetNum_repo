@@ -1,32 +1,29 @@
 """Modulo que contiene el Metodo de Biseccion"""
 
-import math as m
 import sys
 import sympy as sp
 
-# Declaracion de variable simbolica
-x = sp.symbols('x')
-
-def Funcion(n):
-    """Definicion de la funcion "f de x"""
-    return float(fun.subs(x, n))
-
-def Biseccion(xInf, xSup, tolerancia, limite):
+def Biseccion(expresion, xInf, xSup, tolerancia, limite):
     """Funcion que llevara a cabo el proceso del Metodo de Biseccion"""
+    # Declaracion de variable simbolica
+    x = sp.symbols('x')
+    # Convierte la funcion a formato sympy
+    fun = sp.sympify(expresion)
     # Variables auxiliares
     cont = 0
+
     print("-" * 111)
     print("|{:^8}|{:^8}|{:^12}|{:^18}|{:^27}|{:^31}|".format("a", "b", "f(a)", "x = (a + b) / 2", "f(a) * f(x) < 0", f"|f(x)| < {tolerancia}"))
     print("-" * 111)
 
-    # Bucle que se repetira hasta que se encuentre la raiz
+    # Bucle que se repetira hasta que se encuentre una aproximacion de la raiz o hasta que el se llegue al limite de iteraciones
     while True:
         # Valor medio del intervalo
         xr = (xInf + xSup) / 2
 
         # Evalua la funcion en "xInf" y "xr" y almacena los valores en "f_xInf" y "f_xr" correspondientemente
-        f_xInf = Funcion(xInf)
-        f_xr = Funcion(xr)
+        f_xInf = float(fun.subs(x, xInf))
+        f_xr = float(fun.subs(x, xr))
 
         # Incrementa el contador de interacciones
         cont += 1
@@ -54,7 +51,7 @@ def Biseccion(xInf, xSup, tolerancia, limite):
         elif abs(f_xInf) <= tolerancia:
             xr = xInf
             break
-        elif abs(Funcion(xSup)) <= tolerancia:
+        elif abs(float(fun.subs(x, xSup))) <= tolerancia:
             xr = xSup
             break
 
@@ -74,20 +71,17 @@ def Biseccion(xInf, xSup, tolerancia, limite):
 
 def Metodo_Biseccion(expr):
     print("\n\nMetodo de Biseccion\n")
-    # Convierte la funcion a formato sympy
-    global fun
-    fun = sp.sympify(expr)
 
     # Pide al usuario los valores necesarios para el metodo
     x1 = float(input("Ingrese un valor inicial inferior: "))
     x2 = float(input("Ingrese un valor final superior: "))
-    error = float(input("Ingrese el error de tolerancia (en porcentaje): "))
+    error = float(input("Ingrese el error de tolerancia: "))
     limite = int(input("Ingrese el limite de iteraciones: "))
     print()
 
-    xr = Biseccion(x1, x2, error, limite)
+    xr = Biseccion(expr, x1, x2, error, limite)
 
-    print("\nLa posible raiz es:", xr, "\n")
+    print("\nUna aproximacion a la raiz es:", xr, "\n")
 
 if __name__ == "__main__":
     expr = input("\nIntroduce la funcion en terminos de x: ")

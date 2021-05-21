@@ -2,7 +2,6 @@
 
 from ModulosAdicionales import MatDiagDom
 import numpy as np
-import math
 import sys
 
 def Jacobi(orden, tolerancia, limite, A, x):
@@ -28,10 +27,7 @@ def Jacobi(orden, tolerancia, limite, A, x):
     c = np.copy(A[:, orden:])
 
     # Sentencias para calcular la norma de 'x'
-    normaX1 = 0
-    for elem in range(orden):
-        normaX1 += x[elem] * x[elem]
-    normaX1 = math.sqrt(normaX1)
+    normaX1 = np.linalg.norm(x)
 
     cont = 0
 
@@ -43,7 +39,7 @@ def Jacobi(orden, tolerancia, limite, A, x):
         print("    x", (cantElem + 1), "    ", sep = "", end = "")
     print("   error")
 
-    # Bucle que se repetira hasta que el error sea menor o igual al permitido
+    # Bucle que se repetira hasta que el error sea menor o igual al permitido o hasta que se llegue al limite de iteraciones
     while True:
         # Multiplica la matriz 'T' por el vector 'x' y le suma el vector 'c'
         x = np.matmul(T, np.reshape(x, (orden, 1))) + np.reshape(c, (orden, 1))
@@ -54,10 +50,7 @@ def Jacobi(orden, tolerancia, limite, A, x):
         matIter = np.append(matIter, x)
 
         # Sentencias para calcular la norma de 'x'
-        normaX2 = 0
-        for elem in range(orden):
-            normaX2 += x[elem] * x[elem]
-        normaX2 = math.sqrt(normaX2)
+        normaX2 = np.linalg.norm(x)
 
         # Calcula el error aproximado porcentual y almacena el resultado en la variable 'errorAproxPorcen'
         errorAproxPorcen = ((normaX2 - normaX1) / normaX2) * 100
@@ -109,13 +102,13 @@ def Metodo_de_Jacobi(orden):
         vectorIn[comp] = float(input(f"Ingrese la componente {comp + 1} del vector: "))
 
     # Pide al usuario los valores necesarios para el metodo
-    error = float(input("Ingrese el error de tolerancia: "))
+    error = float(input("Ingrese el error de tolerancia (porcentaje): "))
     limite = float(input("Ingrese el limite de iteraciones: "))
     print()
 
     vectorSol = Jacobi(orden, error, limite, matriz, vectorIn)
 
-    print("\nEl posible vector solucion es:\n", np.transpose(vectorSol).reshape(orden, 1))
+    print("\nUna aproximacion a la solucion es:\n", np.transpose(vectorSol).reshape(orden, 1))
 
 if __name__ == "__main__":
     orden = int(input("Ingrese la cantidad de ecuaciones: "))
