@@ -1,4 +1,4 @@
-"""Modulo que contiene el Metodo de Jacobi para poder determinar el valor de 'y' para """
+"""Modulo que contiene el Metodo de Jacobi para poder determinar el valor de 'y' para el Metodo de Newton para sistemas de ecuaciones no lineales"""
 
 from ModulosAdicionales import MatDiagDom
 import numpy as np
