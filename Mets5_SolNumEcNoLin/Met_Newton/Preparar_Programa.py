@@ -137,7 +137,7 @@ def Escribir_Programa(listaVariables, opcion):
             fout.write(cadena)
         # Agrega la cuarta fila que se debe modificar
         elif linea.startswith("CUARTA4"):
-            cadena = f"                    mtrzY[cont1, cont2] = (-1 ** {opcion}) * (vectFun[cont1][0].subs("
+            cadena = f"                    mtrzY[cont1, cont2] = pow(-1, {opcion}) * (vectFun[cont1][0].subs("
             cont = 0
             for elemento in listaVariables:
                 indiceIn = elemento.find("=")
@@ -146,6 +146,7 @@ def Escribir_Programa(listaVariables, opcion):
             cadena = cadena[:(len(cadena) - 1)]
             cadena += "))\n"
             fout.write(cadena)
+        # Agrega la quinta fila que se debe modificar
         elif linea.startswith("QUINTA5"):
             cadena = "                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs("
             cont = 0
