@@ -1,7 +1,7 @@
 """Modulo que contiene el Metodo de Jacobi"""
 
 import numpy as np
-import sys, os
+import sys
 
 def Jacobi(orden, tolerancia, limite, A, x):
     """Funcion que llevara a cabo el Metodo de Jacobi"""
