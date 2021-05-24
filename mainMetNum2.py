@@ -1,9 +1,15 @@
-from Mets5_SolNumEcNoLin.Met1_PtoFijMain import Punto_Fijo
-from Mets5_SolNumEcNoLin.Met2_NewMain import Newton
-from Mets5_SolNumEcNoLin.Met3_BroyMain import Broyden
-from Mets6_IntYAproxPol.Met1_PolInterLagMain import Lagrange
-from Mets6_IntYAproxPol.Met2_DifDivMain import DiferenciasDivididas
-from Mets6_IntYAproxPol.Met3_NewAdeYAtrMain import NewtonInterpolacion
+import sys
+import os
+
+sys.path.append(os.getcwd() + "/Mets5_SolNumEcNoLin")
+sys.path.append(os.getcwd() + "/Mets6_IntYAproxPol")
+
+import Met1_PtoFijMain
+import Met2_NewMain
+import Met3_BroyMain
+import Met1_PolInterLagMain
+import Met2_DifDivMain
+import Met3_NewAdeYAtrMain
 
 print("\nMetodos Numericos II\n")
 print("1.- Menu de los metodos para aproximar las soluciones en un sistema de ecuaciones no lineales")
@@ -36,19 +42,19 @@ if opcion == 1:
     if opcion == 1:
         print("\nCree un archivo de texto e ingrese las expresiones de la siguiente manera:")
         print("'variable despejada' = 'expresion'\n")
-        Punto_Fijo()
+        Met1_PtoFijMain.Punto_Fijo()
 
     elif opcion == 2:
         print("\nCree un archivo de texto e ingrese las expresiones de la siguiente manera:")
         print("F(a, b, c, ...) = [f1, f2, f3, ...]")
         print("Donde '(a, b, c, ...)' son las variables y 'f1, f2, f3, ...' son las funciones\n")
-        Newton()
+        Met2_NewMain.Newton()
 
     elif opcion == 3:
         print("\nCree un archivo de texto e ingrese las expresiones de la siguiente manera:")
         print("F(a, b, c, ...) = [f1, f2, f3, ...]")
         print("Donde '(a, b, c, ...)' son las variables y 'f1, f2, f3, ...' son las funciones\n")
-        Broyden()
+        Met3_BroyMain.Broyden()
 
 elif opcion == 2:
     print("\nMetodos numericos de interpolacion y aproximacion polinomial\n")
@@ -71,19 +77,19 @@ elif opcion == 2:
         print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
-        Lagrange()
+        Met1_PolInterLagMain.Lagrange()
 
     elif opcion == 2:
         print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
-        DiferenciasDivididas()
+        Met2_DifDivMain.DiferenciasDivididas()
 
     elif opcion == 3:
         print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
-        NewtonInterpolacion()
+        Met3_NewAdeYAtrMain.NewtonInterpolacion()
 
     else:
         print("\n\nEN PROCESO")

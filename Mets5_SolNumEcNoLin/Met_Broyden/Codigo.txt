@@ -3,7 +3,7 @@
 from sage.all import *
 import sys
 import numpy as np
-from Mets5_SolNumEcNoLin.Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
+from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
 
 def Metodo_Broyden(tolerancia, limite, nombre):
     """Funcion que llevara a cabo el Metodo de Broyden"""
@@ -152,8 +152,8 @@ def Broy(FNombre):
     print(Metodo_Broyden(error, lim, FNombre))
 
 if __name__ == "__main__":
+    FNombre = input("Ingresa el nombre del archivo: ")
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
-    FNombre = input("Ingresa el nombre del archivo: ")
     print()
     print(Metodo_Broyden(error, lim, FNombre))

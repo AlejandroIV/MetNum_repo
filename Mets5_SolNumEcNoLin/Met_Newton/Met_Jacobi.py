@@ -75,7 +75,8 @@ def Jacobi(A):
         # Se copia el valor de 'normaX2' en la variable 'normaX1' para que en la siguiente iteracion se considere la norma que se acaba de calcular
         normaX1 = normaX2
 
-    print("\nUna aproximacion a la solucion es:\n\n", np.transpose(x).reshape(A.shape[0], 1))
+    print("\nUna aproximacion a la solucion es:\n", np.transpose(x).reshape(A.shape[0], 1))
+    print()
 
     return x
 

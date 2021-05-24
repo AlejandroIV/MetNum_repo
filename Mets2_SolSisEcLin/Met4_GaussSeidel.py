@@ -1,6 +1,5 @@
 """Modulo que contiene el Metodo de Gauss-Seidel"""
 
-from ModulosAdicionales import MatDiagDom
 import numpy as np
 import sys
 
@@ -126,5 +125,9 @@ def Metodo_de_GaussSeidel(orden):
     print("\nEl posible vector solucion es: \n", np.transpose(vectorSol).reshape(orden, 1))
 
 if __name__ == "__main__":
+    sys.path.append("..//")
+    from ModulosAdicionales import MatDiagDom
     orden = int(input("Ingrese la cantidad de ecuaciones: "))
     Metodo_de_GaussSeidel(orden)
+else:
+    from ModulosAdicionales import MatDiagDom

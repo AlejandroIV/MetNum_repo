@@ -3,7 +3,7 @@
 from sage.all import *
 import sys
 import numpy as np
-from Mets5_SolNumEcNoLin.Met_Punto_Fijo.Preparar_Programa import Llenar_Vector_Funciones
+from Met_Punto_Fijo.Preparar_Programa import Llenar_Vector_Funciones
 
 def Metodo_Punto_Fijo(tolerancia, limite, nombre):
     """Funcion que llevara a cabo el Metodo del Punto Fijo"""
@@ -82,7 +82,8 @@ def Pto_Fij(FNombre):
     print(Metodo_Punto_Fijo(error, lim, FNombre))
 
 if __name__ == "__main__":
+    FNombre = input("Ingresa el nombre del archivo: ")
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
-    FNombre = input("Ingresa el nombre del archivo: ")
+    print()
     print(Metodo_Punto_Fijo(error, lim, FNombre))

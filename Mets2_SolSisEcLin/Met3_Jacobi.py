@@ -1,8 +1,7 @@
 """Modulo que contiene el Metodo de Jacobi"""
 
-from ModulosAdicionales import MatDiagDom
 import numpy as np
-import sys
+import sys, os
 
 def Jacobi(orden, tolerancia, limite, A, x):
     """Funcion que llevara a cabo el Metodo de Jacobi"""
@@ -111,5 +110,9 @@ def Metodo_de_Jacobi(orden):
     print("\nUna aproximacion a la solucion es:\n", np.transpose(vectorSol).reshape(orden, 1))
 
 if __name__ == "__main__":
+    sys.path.append("..//")
+    from ModulosAdicionales import MatDiagDom
     orden = int(input("Ingrese la cantidad de ecuaciones: "))
     Metodo_de_Jacobi(orden)
+else:
+    from ModulosAdicionales import MatDiagDom

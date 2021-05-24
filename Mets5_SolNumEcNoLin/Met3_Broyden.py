@@ -3,24 +3,24 @@
 from sage.all import *
 import sys
 import numpy as np
-from Mets5_SolNumEcNoLin.Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
+from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
 
 def Metodo_Broyden(tolerancia, limite, nombre):
     """Funcion que llevara a cabo el Metodo de Broyden"""
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
     # Despues crea un vector de flotantes que contendra los valores de las variables dados por el usuario   
-    vectSol = np.array([8,8,7], dtype = 'f')
+    vectSol = np.array([1.5,3.5], dtype = 'f')
     vectSol = np.reshape(vectSol, (vectSol.shape[0], 1))
     # Declara las variables para poder calcular el jacobiano
-    w,x,y = var('w','x','y')
+    x,y = var('x','y')
 
     # Crea la matriz que contendra el jacobiano de las funciones
     matJac = np.empty(0, dtype = type(SR()))
     # Bucle que recorre todo el vector de funciones para calcular la matriz jacobiana y almacenarla en matJac
     for funcion in vectFun:
         # Ira calculando el jacobiano de cada fila
-        filaJac = jacobian(funcion[0], (w,x,y))
+        filaJac = jacobian(funcion[0], (x,y))
         # Bucle que ira agregando las funciones una por una para separarlas
         for derPar in filaJac[0]:
             matJac = np.append(matJac, derPar)
@@ -41,7 +41,6 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     matIter = np.append(matIter, 0)
 
     print('-' * (15 * vectSol.shape[0]))
-    print((' ' * 5) + 'w' + (' ' * 4), sep = '', end = '')
     print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
     print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
     print((' ' * 6) + 'error')
@@ -54,11 +53,11 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     # en el vector columna que tiene las funciones y los resultados los ira almacenando en la matriz 'mtrzA'
     for cont1 in range(matJac.shape[0]):
         for cont2 in range(matJac.shape[0]):
-            mtrzA[cont1, cont2] = matJac[cont1, cont2].subs(w = vectSol[0, 0],x = vectSol[1, 0],y = vectSol[2, 0])
+            mtrzA[cont1, cont2] = matJac[cont1, cont2].subs(x = vectSol[0, 0],y = vectSol[1, 0])
 
     # Almacena en "evalFun1X" la primera evaluacion de las funciones
     for contFun in range(vectFun.shape[0]):
-            evalFun1X[contFun, 0] = vectFun[contFun][0].subs(w = vectSol[0, 0],x = vectSol[1, 0],y = vectSol[2, 0])
+            evalFun1X[contFun, 0] = vectFun[contFun][0].subs(x = vectSol[0, 0],y = vectSol[1, 0])
     # Calula la inversa del jacobiano, lo multiplica por el vector que contiene por valores las funciones evaluadas y cambia el signo a negativo
     mtrzA = np.linalg.inv(mtrzA)  # Almacena la inversa del jacobiano en "mtrzA"
     vectS = -(np.matmul(mtrzA, evalFun1X))
@@ -88,7 +87,7 @@ def Metodo_Broyden(tolerancia, limite, nombre):
         # Almacena la evaluacion anterior y lo vuelve a evaluar
         evalFun2X = np.copy(evalFun1X)
         for contFun in range(matJac.shape[0]):
-            evalFun1X[contFun, 0] = vectFun[contFun][0].subs(w = vectSol[0, 0],x = vectSol[1, 0],y = vectSol[2, 0])
+            evalFun1X[contFun, 0] = vectFun[contFun][0].subs(x = vectSol[0, 0],y = vectSol[1, 0])
         # Almacena la diferencia de las evaluaciones en "diferEval"
         diferEval = evalFun1X - evalFun2X
 
@@ -156,8 +155,8 @@ def Broy(FNombre):
     print(Metodo_Broyden(error, lim, FNombre))
 
 if __name__ == "__main__":
+    FNombre = input("Ingresa el nombre del archivo: ")
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
-    FNombre = input("Ingresa el nombre del archivo: ")
     print()
     print(Metodo_Broyden(error, lim, FNombre))

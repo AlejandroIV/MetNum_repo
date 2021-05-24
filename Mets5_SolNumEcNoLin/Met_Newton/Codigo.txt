@@ -3,8 +3,7 @@
 from sage.all import *
 import sys
 import numpy as np
-from Mets5_SolNumEcNoLin.Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
-from Mets5_SolNumEcNoLin.Met_Newton import Met_Jacobi
+from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
 
 def Metodo_Newton(tolerancia, limite, nombre, opcion):
     """Funcion que llevara a cabo el Metodo de Newton"""
@@ -51,17 +50,17 @@ TERCERA3 LINEA INGRESADA POR EL PROGRAMA
             for cont2 in range(matJac.shape[0] + 1):
                 # Cuando se cumple la condicion quiere decir que ahora hay que considerar la funcion del vector de funciones
                 if cont2 == matJac.shape[0]:
-                    # Se cambiara de signo si el usuario elije usar el metodo de Jacobi
+                    # Se cambiara de signo cuando se evaluen las funciones
 CUARTA4 LINEA INGRESADA POR EL PROGRAMA
                     continue
 QUINTA5 LINEA INGRESADA POR EL PROGRAMA
 
         if opcion == 1:
-            # Manda a llamar a la funcion "Jacobi" para resolver el sistema de ecuaciones sin cambiar el signo
+            # Manda a llamar a la funcion "Jacobi" para resolver el sistema de ecuaciones
             vectY = Met_Jacobi.Jacobi(mtrzY)
         else:
             # Calula la inversa del jacobiano y lo multiplica por el vector que contiene como valores las funciones evaluadas con signo negativo
-            vectY = -np.matmul(np.linalg.inv(mtrzY[:, :(matJac.shape[0])]), np.reshape(mtrzY[:, (matJac.shape[0]):], (matJac.shape[0], 1)))
+            vectY = np.matmul(np.linalg.inv(mtrzY[:, :(matJac.shape[0])]), np.reshape(mtrzY[:, (matJac.shape[0]):], (matJac.shape[0], 1)))
 
         vectSol += vectY
 
@@ -117,12 +116,16 @@ def Newt(FNombre, op):
     print(Metodo_Newton(error, lim, FNombre, op))
 
 if __name__ == "__main__":
-    error = float(input("Ingresa la tolerancia: "))
-    lim = float(input("Ingresa el limite de iteraciones: "))
+    sys.path.append("..//")
+    from Met_Newton import Met_Jacobi
     FNombre = input("Ingresa el nombre del archivo: ")
     print("\nElije alguna de las siguientes opciones: ")
     print("1 - Usar el Metodo de Jacobi para determinar el valor del vector 'y'")
     print("2 - Calcular la inversa de la matriz jacobiana para determinar el valor del vector 'y'")
     opc = int(input("Opcion: "))
     print()
+    error = float(input("Ingresa la tolerancia: "))
+    lim = float(input("Ingresa el limite de iteraciones: "))
     print(Metodo_Newton(error, lim, FNombre, opc))
+else:
+    from Met_Newton import Met_Jacobi
