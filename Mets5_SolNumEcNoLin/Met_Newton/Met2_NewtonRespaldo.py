@@ -131,4 +131,4 @@ if __name__ == "__main__":
     lim = float(input("Ingresa el limite de iteraciones: "))
     print(Metodo_Newton(error, lim, FNombre, opc))
 else:
-    import Met_Jacobi
+    import Met_Jacobis

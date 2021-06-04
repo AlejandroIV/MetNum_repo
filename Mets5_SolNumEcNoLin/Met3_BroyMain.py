@@ -12,4 +12,4 @@ def Broyden():
     print()
     Escribir_Programa(listaVars)
     from Met3_Broyden import Broy
-    Broy(fNombre, opc)
+    Broy(fNombre, opc)s
