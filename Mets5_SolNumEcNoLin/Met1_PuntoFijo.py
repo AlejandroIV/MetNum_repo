@@ -22,12 +22,6 @@ def Metodo_Punto_Fijo(tolerancia, limite, nombre):
     matIter = np.copy(vectSol)
     matIter = np.append(matIter, 0)
 
-    print('-' * (15 * vectSol.shape[0]))
-    print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
-    print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
-    print((' ' * 5) + 'z' + (' ' * 4), sep = '', end = '')
-    print((' ' * 6) + 'error')
-
     contIt = 0
     # Bucle que se repetira hasta que el error sea menor o igual al permitido
     while True:
@@ -67,6 +61,12 @@ def Metodo_Punto_Fijo(tolerancia, limite, nombre):
 
         # Se copia el valor de 'normaX2' en la variable 'normaX1' para que en la siguiente iteracion se considere la norma que se acaba de calcular
         norma1 = norma2
+
+    print('-' * (15 * vectSol.shape[0]))
+    print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
+    print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
+    print((' ' * 5) + 'z' + (' ' * 4), sep = '', end = '')
+    print((' ' * 6) + 'error')
 
     matIter = np.reshape(matIter, ((contIt + 1), (vectSol.shape[0] + 1)))
 

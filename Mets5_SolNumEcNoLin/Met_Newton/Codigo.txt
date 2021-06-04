@@ -117,7 +117,7 @@ def Newt(FNombre, op):
 
 if __name__ == "__main__":
     sys.path.append("..//")
-    from Met_Newton import Met_Jacobi
+    import Met_Jacobi
     FNombre = input("Ingresa el nombre del archivo: ")
     print("\nElije alguna de las siguientes opciones: ")
     print("1 - Usar el Metodo de Jacobi para determinar el valor del vector 'y'")
@@ -128,4 +128,4 @@ if __name__ == "__main__":
     lim = float(input("Ingresa el limite de iteraciones: "))
     print(Metodo_Newton(error, lim, FNombre, opc))
 else:
-    from Met_Newton import Met_Jacobi
+    import Met_Jacobi

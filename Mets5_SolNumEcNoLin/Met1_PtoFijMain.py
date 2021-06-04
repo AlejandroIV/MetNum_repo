@@ -8,6 +8,3 @@ def Punto_Fijo():
     Escribir_Programa(listaVars)
     from Met1_PuntoFijo import Pto_Fij
     Pto_Fij(fNombre)
-
-if __name__ == "__main__":
-    Punto_Fijo()

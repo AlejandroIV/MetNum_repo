@@ -5,7 +5,7 @@ import sys
 import numpy as np
 from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
 
-def Metodo_Broyden(tolerancia, limite, nombre):
+def Metodo_Broyden(tolerancia, limite, nombre,  opcion):
     """Funcion que llevara a cabo el Metodo de Broyden"""
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
@@ -40,17 +40,11 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     matIter = np.copy(vectSol)
     matIter = np.append(matIter, 0)
 
-    print('-' * (15 * vectSol.shape[0]))
-    print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
-    print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
-    print((' ' * 6) + 'error')
-
     # Declara las variables que se usaran para almacenar las evaluaciones de las funciones
     evalFun1X = np.empty((matJac.shape[0], 1), dtype = 'f')
     evalFun2X = np.empty((matJac.shape[0], 1), dtype = 'f')
 
-    # Bucle anidado que evaluara cada una de las funciones que hay en la matriz jacobiana y cada una que hay
-    # en el vector columna que tiene las funciones y los resultados los ira almacenando en la matriz 'mtrzA'
+    # Bucle anidado que evaluara cada una de las funciones que hay en la matriz jacobiana y los resultados los ira almacenando en la matriz 'mtrzA'
     for cont1 in range(matJac.shape[0]):
         for cont2 in range(matJac.shape[0]):
             mtrzA[cont1, cont2] = matJac[cont1, cont2].subs(x = vectSol[0, 0],y = vectSol[1, 0])
@@ -58,13 +52,21 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     # Almacena en "evalFun1X" la primera evaluacion de las funciones
     for contFun in range(vectFun.shape[0]):
             evalFun1X[contFun, 0] = vectFun[contFun][0].subs(x = vectSol[0, 0],y = vectSol[1, 0])
-    # Calula la inversa del jacobiano, lo multiplica por el vector que contiene por valores las funciones evaluadas y cambia el signo a negativo
-    mtrzA = np.linalg.inv(mtrzA)  # Almacena la inversa del jacobiano en "mtrzA"
-    vectS = -(np.matmul(mtrzA, evalFun1X))
+
+    if opcion == 1:
+	    # Se cambiara de signo del vector que contiene la evaluacion de las funciones
+        evalFun1X *= -1
+        # Manda a llamar a la funcion "Jacobi" para resolver el sistema de ecuaciones
+        vectS = Met_Jacobi.Jacobi(np.append(mtrzA, evalFun1X, axis = 1))
+    else:
+        # Calcula la inversa del jacobiano y lo multiplica por el vector que contiene como valores las funciones evaluadas con signo negativo
+        mtrzA = np.linalg.inv(mtrzA)
+        vectS = -(np.matmul(mtrzA, evalFun1X))
 
     # Calcula la norma de 'vectSol'
     normaX1 = np.linalg.norm(vectSol)
 
+    # Mas informacion del codigo de las siguientes sentencias en [Burden p. 623]
     vectSol += vectS
 
     # Calcula la norma de 'vectSol'
@@ -137,6 +139,11 @@ def Metodo_Broyden(tolerancia, limite, nombre):
         # Se copia el valor de 'normaX2' en la variable 'normaX1' para que en la siguiente iteracion se considere la norma que se acaba de calcular
         normaX1 = normaX2
 
+    print('-' * (15 * vectSol.shape[0]))
+    print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
+    print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
+    print((' ' * 6) + 'error')
+
     matIter = np.reshape(matIter, ((contIt + 1), (vectSol.shape[0] + 1)))
 
     print("-" * (15 * vectSol.shape[0]))
@@ -148,15 +155,23 @@ def Metodo_Broyden(tolerancia, limite, nombre):
     # Regresa la solucion aproximada
     return vectSol
 
-def Broy(FNombre):
+def Broy(FNombre, op):
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
     print()
-    print(Metodo_Broyden(error, lim, FNombre))
+    print(Metodo_Broyden(error, lim, FNombre, op))
 
 if __name__ == "__main__":
+    sys.path.append("..//")
+    import Met_Jacobi
     FNombre = input("Ingresa el nombre del archivo: ")
+    print("\nElije alguna de las siguientes opciones: ")
+    print("1 - Usar el Metodo de Jacobi para determinar el valor del vector 's'")
+    print("2 - Calcular la inversa de la matriz jacobiana para determinar el valor del vector 's'")
+    opc = int(input("Opcion: "))
+    print()
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
-    print()
-    print(Metodo_Broyden(error, lim, FNombre))
+    print(Metodo_Broyden(error, lim, FNombre, opc))
+else:
+    import Met_Jacobi

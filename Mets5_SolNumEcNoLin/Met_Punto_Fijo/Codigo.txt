@@ -22,8 +22,6 @@ PRIMERA1 LINEA INGRESADA POR EL PROGRAMA
     matIter = np.copy(vectSol)
     matIter = np.append(matIter, 0)
 
-SENTENCIAS1 INGRESADAS POR EL PROGRAMA
-
     contIt = 0
     # Bucle que se repetira hasta que el error sea menor o igual al permitido
     while True:
@@ -63,6 +61,8 @@ SEGUNDA2 LINEA INGRESADA POR EL PROGRAMA
 
         # Se copia el valor de 'normaX2' en la variable 'normaX1' para que en la siguiente iteracion se considere la norma que se acaba de calcular
         norma1 = norma2
+
+SENTENCIAS1 INGRESADAS POR EL PROGRAMA
 
     matIter = np.reshape(matIter, ((contIt + 1), (vectSol.shape[0] + 1)))
 

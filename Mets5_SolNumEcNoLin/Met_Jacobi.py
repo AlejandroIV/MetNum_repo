@@ -79,7 +79,3 @@ def Jacobi(A):
     print()
 
     return x
-
-if __name__ == "__main__":
-    orden = int(input("Ingrese la cantidad de ecuaciones: "))
-    Metodo_de_Jacobi(orden)

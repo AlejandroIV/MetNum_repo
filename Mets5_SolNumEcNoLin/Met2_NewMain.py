@@ -13,6 +13,3 @@ def Newton():
     Escribir_Programa(listaVars)
     from Met2_Newton import Newt
     Newt(fNombre, opc)
-
-if __name__ == "__main__":
-    Newton()
