@@ -78,4 +78,4 @@ def Jacobi(A):
     print("\nUna aproximacion a la solucion es:\n", np.transpose(x).reshape(A.shape[0], 1))
     print()
 
-    return xs
+    return x

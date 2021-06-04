@@ -7,4 +7,4 @@ def Punto_Fijo():
     listaVars = Identificar_Variables(fNombre)
     Escribir_Programa(listaVars)
     from Met1_PuntoFijo import Pto_Fij
-    Pto_Fij(fNombre)s
+    Pto_Fij(fNombre)

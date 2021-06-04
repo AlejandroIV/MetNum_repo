@@ -12,4 +12,4 @@ def Newton():
     print()
     Escribir_Programa(listaVars)
     from Met2_Newton import Newt
-    Newt(fNombre, opc)s
+    Newt(fNombre, opc)

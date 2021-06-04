@@ -90,4 +90,4 @@ if __name__ == "__main__":
     error = float(input("Ingresa la tolerancia: "))
     lim = float(input("Ingresa el limite de iteraciones: "))
     print()
-    print(Metodo_Punto_Fijo(error, lim, FNombre))s
+    print(Metodo_Punto_Fijo(error, lim, FNombre))
