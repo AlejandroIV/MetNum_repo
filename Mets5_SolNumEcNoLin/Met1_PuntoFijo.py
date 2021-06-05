@@ -1,6 +1,5 @@
 """Modulo que contiene el Metodo de Newton Modificado para la solucion de sistemas de ecuaciones no lineales"""
 
-from sage.all import *
 import sys
 import numpy as np
 from Met_Punto_Fijo.Preparar_Programa import Llenar_Vector_Funciones

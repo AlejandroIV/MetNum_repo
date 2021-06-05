@@ -1,6 +1,6 @@
 """Modulo que contiene el Metodo de Broyden para la solucion de sistemas de ecuaciones no lineales"""
 
-from sage.all import *
+from sage.all import SR, jacobian, var
 import sys
 import numpy as np
 from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
