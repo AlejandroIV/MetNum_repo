@@ -63,9 +63,6 @@ def Metodo_Broyden(tolerancia, limite, nombre,  opcion):
         mtrzA = np.linalg.inv(mtrzA)
         vectS = -(np.matmul(mtrzA, evalFun1X))
 
-    # Calcula la norma de 'vectSol'
-    normaX1 = np.linalg.norm(vectSol)
-
     # Mas informacion del codigo de las siguientes sentencias en [Burden p. 623]
     vectSol += vectS
 
