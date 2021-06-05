@@ -3,7 +3,7 @@
 from sage.all import SR, sage, round
 import sys
 import numpy as np
-from Mets6_IntYAproxPol.Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, OpcionesDifDiv
+from Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, OpcionesDifDiv
 
 def Interpolacion_Diferencias_Divididas(nombre):
     """Funcion que construira el Polinomio Interpolante de Newton"""
@@ -93,4 +93,4 @@ def DiferenciasDivididas():
     Interpolacion_Diferencias_Divididas(fNombre)
 
 if __name__ == "__main__":
-    Diferencias_Divididas("prueba")
+    Interpolacion_Diferencias_Divididas("prueba")
