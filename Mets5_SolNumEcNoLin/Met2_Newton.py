@@ -43,7 +43,7 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
 
     contIt = 0
     # Bucle que se repetira hasta que el error sea menor o igual al permitido
-    while(True):
+    while True:
         # Bucle anidado que evaluara cada una de las funciones que hay en la matriz jacobiana y cada una que hay
         # en el vector columna que tiene las funciones y los resultados los ira almacenando en la matriz 'mtrzY'
         for cont1 in range(matJac.shape[0]):

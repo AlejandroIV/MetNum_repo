@@ -84,7 +84,7 @@ def Metodo_Broyden(tolerancia, limite, nombre,  opcion):
 
     contIt = 1
     # Bucle que se repetira hasta que el error sea menor o igual al permitido
-    while(True):
+    while True:
         # Almacena la evaluacion anterior y lo vuelve a evaluar
         evalFun2X = np.copy(evalFun1X)
         for contFun in range(matJac.shape[0]):
