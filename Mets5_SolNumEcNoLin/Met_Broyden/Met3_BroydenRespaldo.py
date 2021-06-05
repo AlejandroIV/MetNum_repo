@@ -1,6 +1,6 @@
 """Modulo que contiene el Metodo de Broyden para la solucion de sistemas de ecuaciones no lineales"""
 
-from sage.all import *
+from sage.all import SR, jacobian, var
 import sys
 import numpy as np
 from Met_Newton.Preparar_Programa import Llenar_Vector_Funciones
@@ -62,9 +62,6 @@ def Metodo_Broyden(tolerancia, limite, nombre,  opcion):
         # Calcula la inversa del jacobiano y lo multiplica por el vector que contiene como valores las funciones evaluadas con signo negativo
         mtrzA = np.linalg.inv(mtrzA)
         vectS = -(np.matmul(mtrzA, evalFun1X))
-
-    # Calcula la norma de 'vectSol'
-    normaX1 = np.linalg.norm(vectSol)
 
     # Mas informacion del codigo de las siguientes sentencias en [Burden p. 623]
     vectSol += vectS
