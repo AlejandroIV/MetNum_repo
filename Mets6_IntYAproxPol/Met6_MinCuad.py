@@ -69,4 +69,4 @@ def MinimosCuadrados():
     Interpolacion_Minimos_Cuadrados(fNombre)
 
 if __name__ == "__main__":
-    Interpolacion_Minimos_Cuadrados("prueba4")
+    Interpolacion_Minimos_Cuadrados("prueba")
