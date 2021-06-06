@@ -3,10 +3,10 @@
 from sage.all import SR, sage, round
 import sys
 import numpy as np
-from Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, OpcionesNet, Modificar_Matriz_DifRegr
+from Mods_Preparar_Metodos.Preparar_Programa import LLenar_Matriz_Datos, AlgoritmoNet, Modificar_Matriz_DifRegr
 
 def Interpolacion_Newton_Adelante_Atras(nombre):
-    """Funcion que construira la tabla de las diferencias para aplicar la Formula de Interpolacion de Newton"""
+    """Funcion que construira la tabla de las diferencias para aplicar la Formula de las Diferencias de Newton"""
     # Primero llena una matriz con los datos contenidos en el documento de texto
     matDatos = LLenar_Matriz_Datos(nombre)
     # Une la matriz 'matDatos' con otra matriz de ceros de orden n x n - 1, donde n es el numero de datos
@@ -25,7 +25,7 @@ def Interpolacion_Newton_Adelante_Atras(nombre):
     np.set_printoptions(precision = 6, suppress = True)
 
     # Pide al usuario que elija una opcion
-    opcion = OpcionesNet()
+    opcion = AlgoritmoNet()
 
     # Si el usuario elije aplicar la interpolacion de newton hacia adelante entonces necesitamos indexar los valores de la primera fila de la matriz 'matDatos'
     if opcion == 1:
