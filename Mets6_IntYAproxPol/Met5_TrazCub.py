@@ -113,4 +113,4 @@ def SplinesCubicos():
     Interpolacion_Splines_Cubicos(fNombre)
 
 if __name__ == "__main__":
-    Interpolacion_Splines_Cubicos("prueba3")
+    Interpolacion_Splines_Cubicos("prueba")

@@ -5,7 +5,7 @@ sys.path.append(os.getcwd() + "/Mets5_SolNumEcNoLin")
 sys.path.append(os.getcwd() + "/Mets6_IntYAproxPol")
 
 import Met1_PtoFijMain, Met2_NewMain, Met3_BroyMain
-import Met1_PolInterLagMain, Met2_DifDivMain, Met3_NewAdeYAtrMain, Met4_PolInterHer
+import Met1_PolInterLagMain, Met2_DifDivMain, Met3_NewAdeYAtrMain, Met4_PolInterHer, Met5_TrazCub, Met6_MinCuad
 
 print("\nMetodos Numericos II\n")
 print("1.- Menu de los metodos para aproximar las soluciones en un sistema de ecuaciones no lineales")
@@ -59,11 +59,13 @@ elif opcion == 2:
     print("2.- Diferencias divididas")
     print("3.- Formula de Interpolacion de Newton: hacia adenlante y hacia atras")
     print("4.- Metodo de Hermite")
+    print("5.- Trazadores Cubicos")
+    print("6.- Minimos Cuadrados")
 
     while True:
         try:
             opcion = int(input("\nElija una opcion: "))
-            if opcion > 0 and opcion < 5:
+            if opcion > 0 and opcion < 7:
                 break
             print("Opcion invalida!!!")
         except:
@@ -92,6 +94,18 @@ elif opcion == 2:
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
         Met4_PolInterHer.Hermite()
+
+    elif opcion == 5:
+        print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
+        print("(x_0,y_0) (x_1,y_1) ...")
+        print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
+        Met5_TrazCub.SplinesCubicos()
+
+    elif opcion == 6:
+        print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
+        print("(x_0,y_0) (x_1,y_1) ...")
+        print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
+        Met6_MinCuad.MinimosCuadrados()
 
     else:
         print("\n\nEN PROCESO")
