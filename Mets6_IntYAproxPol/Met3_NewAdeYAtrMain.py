@@ -19,7 +19,6 @@ def Interpolacion_Newton_Adelante_Atras(nombre):
         cont2 = 0
         # Bucle que calcula los elementos de la tabla de diferencias
         for iteracion in range(cont1, matDatos.shape[0]):
-            # La variable 'elemRengl' va a indexar la fila del valor de x que se va a usar en el minuendo (primer elemento de la resta)
             matDatos[cont2, (cont1 + 1)] = matDatos[(cont2 + 1), cont1] - matDatos[cont2, cont1]
             cont2 += 1
 
