@@ -3,18 +3,21 @@ import os
 
 sys.path.append(os.getcwd() + "/Mets5_SolNumEcNoLin")
 sys.path.append(os.getcwd() + "/Mets6_IntYAproxPol")
+sys.path.append(os.getcwd() + "/Mets7_DiffEIntNum")
 
 import Met1_PtoFijMain, Met2_NewMain, Met3_BroyMain
 import Met1_PolInterLagMain, Met2_DifDivMain, Met3_NewAdeYAtrMain, Met4_PolInterHer, Met5_TrazCub, Met6_MinCuad
+import Met1_DiffNum
 
 print("\nMetodos Numericos II\n")
 print("1.- Menu de los metodos para aproximar las soluciones en un sistema de ecuaciones no lineales")
 print("2.- Menu de los metodos de interpolacion y aproximacion polinomial")
+print("3.- Menu de los metodos de derivacion e integracion numerica")
 
 while True:
     try:
         opcion = int(input("\nElija una opcion: "))
-        if opcion > 0 and opcion < 3:
+        if opcion > 0 and opcion < 4:
             break
         print("Opcion invalida!!!")
     except:
@@ -54,7 +57,6 @@ if opcion == 1:
 
 elif opcion == 2:
     print("\nMetodos numericos de interpolacion y aproximacion polinomial\n")
-    print("Interpolacion polinomial")
     print("1.- Fomula de Lagrange")
     print("2.- Diferencias divididas")
     print("3.- Formula de Interpolacion de Newton: hacia adenlante y hacia atras")
@@ -107,6 +109,21 @@ elif opcion == 2:
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
         Met6_MinCuad.MinimosCuadrados()
 
-    else:
-        print("\n\nEN PROCESO")
-        print("TERMINANDO PROGRAMA...\n\n")
+elif opcion == 3:
+    print("\nMetodos de derivacion e integracion numerica\n")
+    print("1.- Derivacion Numerica")
+
+    while True:
+        try:
+            opcion = int(input("\nElija una opcion: "))
+            if opcion > 0 and opcion < 2:
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    if opcion == 1:
+        print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
+        print("(x_0,y_0) (x_1,y_1) ...")
+        print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
+        Met1_DiffNum.DerivacionNumerica()

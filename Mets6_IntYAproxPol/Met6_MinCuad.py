@@ -1,4 +1,4 @@
-"""Modulo que contiene el codigo para contruir el Polinomio Discreto de Minimos Cuadrados"""
+"""Modulo que contiene el codigo para construir el Polinomio Discreto de Minimos Cuadrados"""
 
 from sage.all import SR, sage, round, ln, var
 import sys
