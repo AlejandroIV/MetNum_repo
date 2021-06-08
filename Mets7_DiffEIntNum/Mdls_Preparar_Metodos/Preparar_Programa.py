@@ -138,5 +138,6 @@ def FormulasDer(matriz):
         else:  # Caso en el que se decide usar 5 puntos
             lista.append(vectAux[2, 0])
 
-    # Regresa el vector con los datos que se usaran en la formula, la lista con los valores [formula, cantidad de valores, el valor de h,
-    return(vectAux, lista)  # punto que se esta calculando de la derivada] la lista para imprimir los valores
+    # Regresa el vector con los datos que se usaran en la formula y 
+    # la lista con los valores [formula, cantidad de valores, el valor de h, punto al que se le va a calcular la derivada]
+    return(vectAux, lista)
