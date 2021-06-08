@@ -45,7 +45,6 @@ def Derivacion_Numerica(nombre):
                 - (48 * dtsFormulas[0][3, 1]) + (25 * dtsFormulas[0][4, 1]), 6)
 
     derivada = round(derivada, 6)
-    print(dtsFormulas[0])
 
     # Imprime el resultado
     listaAux = ["hacia adelante", "hacia atras", "centrada"]
