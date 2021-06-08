@@ -52,9 +52,9 @@ def LLenar_Matriz_Datos(nombreArchTxt):
 def FormulasDer(matriz):
     """Funcion que pedira al usuario elegir que formula de derivacion numerica aplicar"""
     # Pide al usuario que elija una de las siguientes opciones
-    print("\n1.- Diferencias finitas hacia adelante")
-    print("2.- Diferencias finitas hacia atras")
-    print("3.- Diferencias finitas centradas")
+    print("\n1.- Derivacion numerica hacia adelante")
+    print("2.- Derivacion numerica hacia atras")
+    print("3.- Derivacion numerica centrada")
     # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
     lista = []
 
