@@ -7,7 +7,7 @@ sys.path.append(os.getcwd() + "/Mets7_DiffEIntNum")
 
 import Met1_PtoFijMain, Met2_NewMain, Met3_BroyMain
 import Met1_PolInterLagMain, Met2_DifDivMain, Met3_NewAdeYAtrMain, Met4_PolInterHer, Met5_TrazCub, Met6_MinCuad
-import Met1_DiffNum
+import Met1_DiffNum, Met2_IntNum
 
 print("\nMetodos Numericos II\n")
 print("1.- Menu de los metodos para aproximar las soluciones en un sistema de ecuaciones no lineales")
@@ -112,11 +112,12 @@ elif opcion == 2:
 elif opcion == 3:
     print("\nMetodos de derivacion e integracion numerica\n")
     print("1.- Derivacion Numerica")
+    print("2.- Newton Cotes")
 
     while True:
         try:
             opcion = int(input("\nElija una opcion: "))
-            if opcion > 0 and opcion < 2:
+            if opcion > 0 and opcion < 3:
                 break
             print("Opcion invalida!!!")
         except:
@@ -127,3 +128,9 @@ elif opcion == 3:
         print("(x_0,y_0) (x_1,y_1) ...")
         print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
         Met1_DiffNum.DerivacionNumerica()
+
+    elif opcion == 2:
+        print("\nCree un archivo de texto e ingrese los datos ahi de la siguiente manera:")
+        print("(x_0,y_0) (x_1,y_1) ...")
+        print("Donde 'x_0, x_1, ...' son las abscisas y 'y_0, y_1, ...' son las imagenes de las funciones en los puntos\n")
+        Met2_IntNum.IntegracionNumerica()

@@ -51,7 +51,7 @@ def LLenar_Matriz_Datos(nombreArchTxt):
 
 def FormulasDer(matriz):
     """Funcion que pedira al usuario elegir que formula de derivacion numerica aplicar"""
-    # Pide al usuario que lija una de las siguientes opciones
+    # Pide al usuario que elija una de las siguientes opciones
     print("\n1.- Diferencias finitas hacia adelante")
     print("2.- Diferencias finitas hacia atras")
     print("3.- Diferencias finitas centradas")
@@ -140,4 +140,83 @@ def FormulasDer(matriz):
 
     # Regresa el vector con los datos que se usaran en la formula y 
     # la lista con los valores [formula, cantidad de valores, el valor de h, punto al que se le va a calcular la derivada]
+    return(vectAux, lista)
+
+def FormulasInt(matriz):
+    """Funcion que pedira al usuario elegir que formula de integracion numerica aplicar"""
+    # Pide al usuario que elija una de las siguientes opciones
+    print("\n1.- Regla del trapecio")
+    print("2.- Regla de simpson 1/3")
+    print("3.- Regla de simpson 3/8")
+    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
+    lista = []
+
+    while True:
+        try:
+            op = int(input("\nElija una opcion: "))
+            if op > 0 and op < 4:
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    # Agrega la opcion elegida por el usuario en la lista 'lista'
+    lista.append(op)
+
+    np.set_printoptions(precision = 6, suppress = True)
+
+    # Imprime los datos
+    print("\nLos datos ingresados son los siguientes:\n")
+    # Bucle que recorre la matriz que contiene los datos y los imprime de manera enumerada para que el usuario elija los datos que desee utilizar
+    for elem in range(matriz.shape[0]):
+        print((elem + 1), end = "   -   ")
+        print(matriz[elem, :])
+
+    # Pide al usuario elegir que datos elegir cuantos datos elegir
+    while True:
+        try:
+            op = int(input("\nCuantos valores desea usar? "))
+            if op > 1 and op <= matriz.shape[0]:
+                lista.append(op)
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    # Crea el vector auxiliar que contendra los valores que se usaran en las formulas
+    vectAux = np.empty((op, 2), dtype = 'f')
+
+    # Si el usuario decide usar todos los datos
+    if op == matriz.shape[0]:
+        vectAux = matriz
+    
+    # Si el usuario decide no usar todos los datos
+    else:
+        # Pide al usuario elegir que datos usar
+        for indice in range(op):
+            while True:
+                try:
+                    dato = int(input(f"Elije el dato {indice + 1} que desee usar: "))
+                    if dato > 0 and dato <= matriz.shape[0]:
+                        vectAux[indice] = matriz[dato - 1]
+                        break
+                    print("Entrada invalida")
+                except:
+                    print("Entrada invalida")
+
+    # Pide al usuario que ingrese un valor para 'h' positivo
+    while True:
+        try:
+            h = float(input("\nIngrese un valor para 'h': "))
+            if h > 0:
+                break
+            print("Entrada invalida")
+        except:
+            print("Entrada invalida")
+
+    # Agrega el valor de 'h' ingresado por el usuario en la lista 'lista'
+    lista.append(round(h, 6))
+
+    # Regresa el vector con los datos que se usaran en la formula y 
+    # la lista con los valores [formula, cantidad de valores, el valor de h]
     return(vectAux, lista)

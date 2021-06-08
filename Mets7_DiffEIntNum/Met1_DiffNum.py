@@ -44,12 +44,10 @@ def Derivacion_Numerica(nombre):
                 derivada = (1 / (12 * dtsFormulas[1][2])) * round((3 * dtsFormulas[0][0, 1]) - (16 * dtsFormulas[0][1, 1]) + (36 * dtsFormulas[0][2, 1]) \
                 - (48 * dtsFormulas[0][3, 1]) + (25 * dtsFormulas[0][4, 1]), 6)
 
-    derivada = round(derivada, 6)
-
     # Imprime el resultado
     listaAux = ["hacia adelante", "hacia atras", "centrada"]
-    print(f"\n\nUsando la formula de diferenciacion numerica {listaAux[dtsFormulas[1][0] - 1]} y con h = {dtsFormulas[1][2]}")
-    print(f"Al aproximar las formulas de {dtsFormulas[1][1]} puntos se obtiene que la primera derivada en el punto {dtsFormulas[1][3]} es: {round(derivada, 8)}")
+    print(f"\n\nUsando la formula de derivacion numerica {listaAux[dtsFormulas[1][0] - 1]} y con h = {dtsFormulas[1][2]}")
+    print(f"La aproximacion de la primera derivada mediante la formula de {dtsFormulas[1][1]} puntos en x = {dtsFormulas[1][3]} es: {round(derivada, 7)}")
 
 def DerivacionNumerica():
     fNombre = input("Escribe el nombre del archivo sin escribir la extension '.txt': ")
