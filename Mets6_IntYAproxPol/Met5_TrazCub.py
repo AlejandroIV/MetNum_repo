@@ -76,7 +76,7 @@ def Interpolacion_Splines_Cubicos(nombre):
     x = float(input("\nIngresa una abscisa: "))  # Pide al usuario una abscisa
 
     # Si 'x' no se encuentra en el intervalo
-    if np.size(np.where(matDatos[:matDatos.shape[0], 0] > x)) == 0:
+    if np.size(np.where(matDatos[:matDatos.shape[0], 0] >= x)) == 0 or np.size(np.where(matDatos[:matDatos.shape[0], 0] <= x)) == 0:
         print(f"\n\nEl valor {x} no se encuentra en el intervalo")
         print("Pruebe con otro valor\n\n")
         sys.exit(1)

@@ -1,6 +1,6 @@
 """Modulo que contiene las funciones necesarias para preparar los modulos que contiene los metodos de derivacion e integracion numerica"""
 
-from sage.all import *
+from sage.all import sage, round
 import sys
 import numpy as np
 
@@ -67,7 +67,7 @@ def FormulasDer(matriz):
         except:
             print("Opcion invalida!!!")
 
-    # Ingresa la opcion elegida por el usuario en la lista 'lista'
+    # Agrega la opcion elegida por el usuario en la lista 'lista'
     lista.append(op)
 
     np.set_printoptions(precision = 6, suppress = True)
@@ -93,71 +93,50 @@ def FormulasDer(matriz):
         except:
             print("Opcion invalida!!!")
 
-    # Ingresa la opcion elegida por el usuario en la lista 'lista'
+    # Agrega la opcion elegida por el usuario en la lista 'lista'
     lista.append(op)
 
-    # Lista auxiliar para pedir al usuario el valor inicial
-    listaAux = ["inferior", "superior", "centrado"]
-    while True:
-        try:
-            op = int(input(f"Ingresa el dato {listaAux[lista[0] - 1]} que desee usar: "))
-            if op > 0 and op < (matriz.shape[0] + 1):
-                break
-            print("Entrada invalida")
-        except:
-            print("Entrada invalida")
+    # Crea el vector auxiliar que contendra los valores que se usaran en las formulas
+    vectAux = np.empty((op, 2), dtype = 'f')
 
-    op -= 1  # Resta uno porque se usara para indexar la fila de 'matriz'
+    # Pide al usuario elegir que datos usar
+    for indice in range(op):
+        while True:
+            try:
+                dato = int(input(f"Elije el dato {indice + 1} que desee usar: "))
+                if dato > 0 and dato <= matriz.shape[0]:
+                    vectAux[indice] = matriz[dato - 1]
+                    break
+                print("Entrada invalida")
+            except:
+                print("Entrada invalida")
 
     # Pide al usuario que ingrese un valor para 'h' positivo
     while True:
         try:
             h = float(input("\nIngrese un valor para 'h': "))
-            if h > 0 and h % (matriz[1, 0] - matriz[0, 0]):
+            if h > 0:
                 break
             print("Entrada invalida")
         except:
             print("Entrada invalida")
 
-    # Ingresa el valor de 'h' ingresado por el usuario en la lista 'lista'
-    lista.append(h)
+    # Agrega el valor de 'h' ingresado por el usuario en la lista 'lista'
+    lista.append(round(h, 6))
 
-    # Divide el valor de 'h' ingresado por el usuario entre la diferencia entre los primeros valores de 'x' de 'matriz'
-    h /= abs(matriz[1, 0] - matriz[0, 0])
+    # Extrae un valor dependiendo el tipo de formula que elijio el usuario
+    if lista[0] == 1:  # Caso en el que se decide usar la formula hacia adelante
+        lista.append(vectAux[0, 0])
 
-    # Condicional que recorre el indice en caso de que se elija usar las formulas hacia atras y centradas
-    if lista[0] == 2 and lista[1] == 3:  # Caso en el que se desea usar la formula hacia atras y 3 valores
-        indiceIn = int(2 * round(h))
+    if lista[0] == 2:  # Caso en el que se decide usar la formula hacia atras
+        lista.append(vectAux[(vectAux.shape[0] - 1), 0])
 
-    elif lista[0] == 3 and lista[1] == 3:  # Caso en el que se desea usar la formula centrada y 3 valores
-        indiceIn = int(round(h))
+    else:  # Caso en el que se decide usar la formula centrada
+        if lista[1] == 3:  # Caso en el que se decide usar 3 puntos
+            lista.append(vectAux[1, 0])
+        
+        else:  # Caso en el que se decide usar 5 puntos
+            lista.append(vectAux[2, 0])
 
-    elif lista[0] == 2 and lista[1] == 5:  # Caso en el que se desea usar la formula hacia atras y 5 valores
-        indiceIn = int(4 * round(h))
-
-    elif lista[0] == 3 and lista[1] == 5:  # Caso en el que se desea usar la fomrula centrada y 5 valores
-        indiceIn = int(2 * round(h))
-
-    else:  # Casos en el que se desea usar la formula hacia adelante
-        # Para poder indexar el valor inferior
-        indiceIn = op
-
-    if lista[0] == 2 or lista[0] == 3:  # Casos en el que se desea usar la formula hacia atras o centrada
-        # Para poder indexar el valor inferior
-        indiceIn = op - indiceIn
-
-    # Si el valor de 'indiceIn' es negativo significa que que no se pueden indexar mas valores anteriores
-    if indiceIn < 0 or (indiceIn + ((lista[1] - 1) * round(h))) >= matriz.shape[0]:  # Si el valor de 'indiceIn' no puede indexar el valor superior
-        print("\nAlgo ha salido mal!!!")
-        print("Revise su entrada\n")
-        sys.exit(1)
-
-    # Crea el vector auxiliar que contendra los valores que se usaran en las formulas de diferenciacion numerica
-    vectAux = np.empty((lista[1], 2), dtype = 'f')
-
-    # Bucle que llenara el vector 'vectAux'
-    for ind in range(lista[1]):
-        vectAux[ind] = matriz[int(indiceIn + (round(h) * ind)), :]
-
-    # Regresa el vector con los datos que se usaran en la formula, la lista con los valores [formula, cantidad de valores, el valor de h] y
-    return(vectAux, lista, matriz[op, 0])  # el punto que se esta calculando de la derivada
+    # Regresa el vector con los datos que se usaran en la formula, la lista con los valores [formula, cantidad de valores, el valor de h,
+    return(vectAux, lista)  # punto que se esta calculando de la derivada] la lista para imprimir los valores

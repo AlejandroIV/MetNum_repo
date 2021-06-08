@@ -17,36 +17,40 @@ def Derivacion_Numerica(nombre):
     if dtsFormulas[1][0] == 3:
         # Si el usuario decide usar 3 puntos
         if dtsFormulas[1][1] == 3:
-            derivada = (1 / (2 * dtsFormulas[1][2])) * (dtsFormulas[0][2, 1] - dtsFormulas[0][0, 1])
+            derivada = (1 / (2 * dtsFormulas[1][2])) * round(dtsFormulas[0][2, 1] - dtsFormulas[0][0, 1], 6)
         # Si el usuario decide usar 5 puntos
         else:
-            derivada = (1 / (12 * dtsFormulas[1][2])) * (dtsFormulas[0][0, 1] - (8 * dtsFormulas[0][1, 1]) + (8 * dtsFormulas[0][3, 1]) - dtsFormulas[0][4, 1])
+            derivada = (1 / (12 * dtsFormulas[1][2])) * round(dtsFormulas[0][0, 1] - (8 * dtsFormulas[0][1, 1]) \
+            + (8 * dtsFormulas[0][3, 1]) - dtsFormulas[0][4, 1], 6)
 
     else:
         # Si el usuario decide usar la formula de derivacion numerica hacia adelante
         if dtsFormulas[1][0] == 1:
             # Si el usuario decide usar 3 puntos
             if dtsFormulas[1][1] == 3:
-                derivada = (1 / (2 * dtsFormulas[1][2])) * (((-3) * dtsFormulas[0][0, 1]) + (4 * dtsFormulas[0][1, 1]) - dtsFormulas[0][2, 1])
+                derivada = (1 / (2 * dtsFormulas[1][2])) * round(((-3) * dtsFormulas[0][0, 1]) + (4 * dtsFormulas[0][1, 1]) - dtsFormulas[0][2, 1], 6)
             # Si el usuario decide usar 5 puntos
             else:
-                derivada = (1 / (12 * dtsFormulas[1][2])) * (((-25) * dtsFormulas[0][0, 1]) + (48 * dtsFormulas[0][1, 1]) - (36 * dtsFormulas[0][2, 1]) \
-                + (16 * dtsFormulas[0][3, 1]) - (3 * dtsFormulas[0][4, 1]))
+                derivada = (1 / (12 * dtsFormulas[1][2])) * round(((-25) * dtsFormulas[0][0, 1]) + (48 * dtsFormulas[0][1, 1]) - (36 * dtsFormulas[0][2, 1]) \
+                + (16 * dtsFormulas[0][3, 1]) - (3 * dtsFormulas[0][4, 1]), 6)
 
         # Si el usuario decide usar la formula de derivacion numerica hacia atras
         else:
             # Si el usuario decide usar 3 puntos
             if dtsFormulas[1][1] == 3:
-                derivada = (1 / (2 * dtsFormulas[1][2])) * (dtsFormulas[0][0, 1] - (4 * dtsFormulas[0][1, 1]) + (3 * dtsFormulas[0][2, 1]))
+                derivada = (1 / (2 * dtsFormulas[1][2])) * round(dtsFormulas[0][0, 1] - (4 * dtsFormulas[0][1, 1]) + (3 * dtsFormulas[0][2, 1]), 6)
             # Si el usuario decide usar 5 puntos
             else:
-                derivada = (1 / (12 * dtsFormulas[1][2])) * ((3 * dtsFormulas[0][0, 1]) - (16 * dtsFormulas[0][1, 1]) + (36 * dtsFormulas[0][2, 1]) \
-                - (48 * dtsFormulas[0][3, 1]) + (25 * dtsFormulas[0][4, 1]))
+                derivada = (1 / (12 * dtsFormulas[1][2])) * round((3 * dtsFormulas[0][0, 1]) - (16 * dtsFormulas[0][1, 1]) + (36 * dtsFormulas[0][2, 1]) \
+                - (48 * dtsFormulas[0][3, 1]) + (25 * dtsFormulas[0][4, 1]), 6)
+
+    derivada = round(derivada, 6)
+    print(dtsFormulas[0])
 
     # Imprime el resultado
     listaAux = ["hacia adelante", "hacia atras", "centrada"]
     print(f"\n\nUsando la formula de diferenciacion numerica {listaAux[dtsFormulas[1][0] - 1]} y con h = {dtsFormulas[1][2]}")
-    print(f"Al aproximar las formulas de {dtsFormulas[1][1]} puntos se obtiene que la primera derivada en el punto {dtsFormulas[2]} es: {round(derivada, 8)}")
+    print(f"Al aproximar las formulas de {dtsFormulas[1][1]} puntos se obtiene que la primera derivada en el punto {dtsFormulas[1][3]} es: {round(derivada, 8)}")
 
 def DerivacionNumerica():
     fNombre = input("Escribe el nombre del archivo sin escribir la extension '.txt': ")
