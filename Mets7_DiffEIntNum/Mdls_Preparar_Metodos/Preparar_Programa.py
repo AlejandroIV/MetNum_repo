@@ -1,6 +1,6 @@
 """Modulo que contiene las funciones necesarias para preparar los modulos que contiene los metodos de derivacion e integracion numerica"""
 
-from sage.all import sage, round
+from sage.all import SR, sage, round
 import sys
 import numpy as np
 
@@ -18,6 +18,16 @@ def LLenar_Matriz_Datos(nombreArchTxt):
     for parr in archDts:
         # Guarda en la variable 'dts' la cadena de texto con los datos que hay en el archivo de texto en formato 'str'
         dts += parr
+        # Intenta convertir la primera cadena de texto a formato 'SR' (caso de las integrales)
+        try:
+            # Variable que contendra la funcion
+            funcion = SR(dts)
+             # Cierra el archivo
+            archDts.close()
+            # Regresa la funcion en formato 'SR'
+            return funcion
+        except:
+            continue
 
     # Separa los datos delimitados por espacios
     dts = dts.split(' ')
@@ -67,7 +77,7 @@ def FormulasDer(matriz):
         except:
             print("Opcion invalida!!!")
 
-    # Agrega la opcion elegida por el usuario en la lista 'lista'
+    # Agrega la opcion elegida por el usuario a la lista 'lista'
     lista.append(op)
 
     np.set_printoptions(precision = 6, suppress = True)
@@ -93,7 +103,7 @@ def FormulasDer(matriz):
         except:
             print("Opcion invalida!!!")
 
-    # Agrega la opcion elegida por el usuario en la lista 'lista'
+    # Agrega la opcion elegida por el usuario a la lista 'lista'
     lista.append(op)
 
     # Crea el vector auxiliar que contendra los valores que se usaran en las formulas
@@ -121,7 +131,7 @@ def FormulasDer(matriz):
         except:
             print("Entrada invalida")
 
-    # Agrega el valor de 'h' ingresado por el usuario en la lista 'lista'
+    # Agrega el valor de 'h' ingresado por el usuario a la lista 'lista'
     lista.append(round(h, 6))
 
     # Extrae un valor dependiendo el tipo de formula que elijio el usuario
@@ -142,25 +152,26 @@ def FormulasDer(matriz):
     # la lista con los valores [formula, cantidad de valores, el valor de h, punto al que se le va a calcular la derivada]
     return(vectAux, lista)
 
-def FormulasInt(matriz):
-    """Funcion que pedira al usuario elegir que formula de integracion numerica aplicar"""
+def FormulasInt_Datos(matriz):
+    """Funcion que pedira al usuario elegir que formula de integracion numerica aplicar si ingreso los valores de 'x' y 'y'"""
     # Pide al usuario que elija una de las siguientes opciones
     print("\n1.- Regla del trapecio")
     print("2.- Regla de simpson 1/3")
     print("3.- Regla de simpson 3/8")
+    print("4.- Regla del punto medio")
     # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
     lista = []
 
     while True:
         try:
             op = int(input("\nElija una opcion: "))
-            if op > 0 and op < 4:
+            if op > 0 and op < 5:
                 break
             print("Opcion invalida!!!")
         except:
             print("Opcion invalida!!!")
 
-    # Agrega la opcion elegida por el usuario en la lista 'lista'
+    # Agrega la opcion elegida por el usuario a la lista 'lista'
     lista.append(op)
 
     np.set_printoptions(precision = 6, suppress = True)
@@ -214,9 +225,80 @@ def FormulasInt(matriz):
         except:
             print("Entrada invalida")
 
-    # Agrega el valor de 'h' ingresado por el usuario en la lista 'lista'
+    # Agrega el valor de 'h' ingresado por el usuario a la lista 'lista'
     lista.append(round(h, 6))
 
     # Regresa el vector con los datos que se usaran en la formula y 
     # la lista con los valores [formula, cantidad de valores, el valor de h]
     return(vectAux, lista)
+
+def FormulasInt_Funcion(funcion):
+    """Funcion que pedira al usuario elegir que formula de integracion numerica aplicar si ingreso una funcion"""
+    # Pide al usuario que elija una de las siguientes opciones
+    print("\n1.- Regla del trapecio")
+    print("2.- Regla de simpson 1/3")
+    print("3.- Regla de simpson 3/8")
+    print("4.- Regla del punto medio")
+
+    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
+    lista = []
+
+    while True:
+        try:
+            op = int(input("\nElija una opcion: "))
+            if op > 0 and op < 5:
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    # Agrega la opcion elegida por el usuario a la lista 'lista'
+    lista.append(op)
+
+    np.set_printoptions(precision = 6, suppress = True)
+
+    while True:
+        try:
+            x1 = float(input("Ingrese el valor del limite inferior de la integral: "))
+            break
+        except:
+            print("Entrada invalida")
+
+    while True:
+        try:
+            x2 = float(input("Ingrese el valor del limite superior de la integral: "))
+            if x2 > x1:
+                break
+            print("Entrada invalida")
+        except:
+            print("Entrada invalida")
+
+    while True:
+        try:
+            op = int(input("\nCuantos subintervalos desea usar? "))
+            if op > 0:
+                lista.append(op + 1)
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    # Calcula el valor de 'h' [Burden p. 197]
+    h = (x2 - x1) / op
+    # Agrega el valor de 'h' a la lista 'lista'
+    lista.append(round(h, 6))
+
+    # Crea la matriz que contendra los valores de 'x' y 'y'
+    matDatos = np.empty(((op + 1), 2), dtype = 'f')
+
+    # Primero llena la primera columna con los valores de 'x'
+    for priCol in range(op + 1):
+        matDatos[priCol, 0] = round(x1 + (h * priCol), 6)
+
+    # Evalua la funcion en cada punto de 'x' y lo almacena en la segunda columna
+    for segCol in range(op + 1):
+        matDatos[segCol, 1] = funcion.subs(x = matDatos[segCol, 0])
+
+    # Regresa el vector columna con los datos que se usaran en la formula y 
+    # la lista con los valores [formula, cantidad de valores, el valor de h]
+    return(matDatos, lista)
