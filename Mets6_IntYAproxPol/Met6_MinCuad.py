@@ -28,9 +28,7 @@ def Interpolacion_Minimos_Cuadrados(nombre):
         [np.sum(ln(matDatos[:, 0])), matDatos.shape[0], np.sum(matDatos[:, 2])]])
 
         # Calculamos las inversas de las matrices para calcular el polinomio de orden 2
-        print(matBXA)
         matBXA = np.matmul(np.linalg.inv(matBXA[:, :2]), matBXA[:, 2])
-        print(matBXA)
 
     # Si la relacion de los datos no es exponencial
     else:
