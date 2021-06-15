@@ -287,7 +287,7 @@ def RelacionMinCuad():
     # Pide al usuario que indique si los datos tiene una relacion exponencial
     while True:
         try:
-            op = int(input("Los datos tienen relacion exponencial?\nSi - 1    No - 0: "))
+            op = int(input("\nLos datos tienen relacion exponencial?\nSi - 1    No - 0: "))
             if op > -1 and op < 2:
                 break
             print("Opcion invalida!!!")

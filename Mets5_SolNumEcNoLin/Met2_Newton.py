@@ -10,17 +10,17 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
     # Primero llena un vector columna con las funciones contenidas en el documento de texto
     vectFun = Llenar_Vector_Funciones(nombre)
     # Despues crea un vector de flotantes que contendra los valores de las variables dados por el usuario   
-    vectSol = np.array([1.5,3.5], dtype = 'f')
+    vectSol = np.array([3], dtype = 'f')
     vectSol = np.reshape(vectSol, (vectSol.shape[0], 1))
     # Declara las variables para poder calcular el jacobiano
-    x,y = var('x','y')
+    x = var('x')
 
     # Crea la matriz que contendra el jacobiano de las funciones
     matJac = np.empty(0, dtype = type(SR()))
     # Bucle que recorre todo el vector de funciones para calcular la matriz jacobiana y almacenarla en matJac
     for funcion in vectFun:
         # Ira calculando el jacobiano de cada fila
-        filaJac = jacobian(funcion[0], (x,y))
+        filaJac = jacobian(funcion[0], (x))
         # Se selecciona 'funcion[0]' porque 'funcion' es una lista
         # Bucle que ira agregando las funciones una por una para separarlas
         for derPar in filaJac[0]:
@@ -51,9 +51,9 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
                 # Cuando se cumple la condicion quiere decir que ahora hay que considerar la funcion del vector de funciones
                 if cont2 == matJac.shape[0]:
                     # Se cambiara de signo cuando se evaluen las funciones
-                    mtrzY[cont1, cont2] = (-1) * (vectFun[cont1][0].subs(x = vectSol[0, 0],y = vectSol[1, 0]))
+                    mtrzY[cont1, cont2] = (-1) * (vectFun[cont1][0].subs(x = vectSol[0, 0]))
                     continue
-                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs(x = vectSol[0, 0],y = vectSol[1, 0])
+                mtrzY[cont1, cont2] = matJac[cont1, cont2].subs(x = vectSol[0, 0])
 
         if opcion == 1:
             # Manda a llamar a la funcion "Jacobi" para resolver el sistema de ecuaciones
@@ -97,7 +97,6 @@ def Metodo_Newton(tolerancia, limite, nombre, opcion):
 
     print('-' * (15 * vectSol.shape[0]))
     print((' ' * 5) + 'x' + (' ' * 4), sep = '', end = '')
-    print((' ' * 5) + 'y' + (' ' * 4), sep = '', end = '')
     print((' ' * 6) + 'error')
 
     matIter = np.reshape(matIter, ((contIt + 1), (vectSol.shape[0] + 1)))

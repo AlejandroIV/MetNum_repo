@@ -69,9 +69,8 @@ def Interpolacion_Splines_Cubicos(nombre):
     matDatos = np.append(matDatos, vectC, axis = 1)
     matDatos = np.append(matDatos, vectD, axis = 1)
 
-    np.set_printoptions(precision = 6, suppress = True)
-
-    print(f"\n{matDatos}\n")
+    # Imprime la matriz 'matDatos'
+    print("\n" + "\n".join([''.join(['{:12}'.format(round(val, 6)) for val in fila]) for fila in matDatos]) + "\n")
 
     x = float(input("\nIngresa una abscisa: "))  # Pide al usuario una abscisa
 
