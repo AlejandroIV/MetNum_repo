@@ -79,7 +79,7 @@ def Integracion_Numerica(nombre):
     listaAux = ["regla del trapecio", "regla de simpson 1/3", "regla de simpson 3/8", "regla del punto medio"]
     print(f"\n\nUsando la formula de integracion numerica {listaAux[dtsFormulas[1][0] - 1]} y con h = {dtsFormulas[1][2]}")
     print(f"La aproximacion de la integral de x = {dtsFormulas[0][0, 0]} a x = {dtsFormulas[0][(dtsFormulas[1][1] - 1), 0]}", end = " ")
-    print(f"con {dtsFormulas[1][1] - 1} subintervalos es: {round(integral, 7)}")
+    print(f"con {dtsFormulas[1][1] - 1} subintervalos es: {round(integral, 7)}\n\n")
 
 def IntegracionNumerica():
     fNombre = input("Escribe el nombre del archivo sin escribir la extension '.txt': ")
