@@ -159,7 +159,7 @@ def FormulasInt_Datos(matriz):
     print("2.- Regla de simpson 1/3")
     print("3.- Regla de simpson 3/8")
     print("4.- Regla del punto medio")
-    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
+    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de integracion numerica
     lista = []
 
     while True:
@@ -240,7 +240,7 @@ def FormulasInt_Funcion(funcion):
     print("3.- Regla de simpson 3/8")
     print("4.- Regla del punto medio")
 
-    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de derivacion numerica
+    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de integracion numerica
     lista = []
 
     while True:
@@ -302,3 +302,60 @@ def FormulasInt_Funcion(funcion):
     # Regresa el vector columna con los datos que se usaran en la formula y 
     # la lista con los valores [formula, cantidad de valores, el valor de h]
     return(matDatos, lista)
+
+def IntegralRom():
+    """Funcion que pedira al usuario elegir los cantidad los datos necesarios para aplicar la inegral de Romberg"""
+    # Crea la lista que contendra los valores que ingrese el usuario para aplicar las formulas de integracion numerica
+    lista = []
+
+    print()
+
+    np.set_printoptions(precision = 6, suppress = True)
+
+    while True:
+        try:
+            x1 = float(input("Ingrese el valor del limite inferior de la integral: "))
+            if x1 != '':
+                lista.append(x1)
+                break
+        except:
+            print("Entrada invalida")
+
+    while True:
+        try:
+            x2 = float(input("Ingrese el valor del limite superior de la integral: "))
+            if x2 > x1:
+                lista.append(x2)
+                break
+            print("Entrada invalida")
+        except:
+            print("Entrada invalida")
+
+    while True:
+        try:
+            op = int(input("\nCuantas aproximaciones iniciales desea usar? "))
+            if op > 0:
+                lista.append(op)
+                break
+            print("Opcion invalida!!!")
+        except:
+            print("Opcion invalida!!!")
+
+    # Regresa la lista con los valores [limite inferior, limite superior, cantidad de iteraciones iniciales]
+    return lista
+
+def EvalRom_Funcion(funcion, h, n, inferior):
+    """Funcion que evaluara funcion para aplicar la regla del trapecio"""
+    # Crea la matriz que contendra los valores de 'x' y 'y'
+    matDatos = np.empty(((n + 1), 2), dtype = 'f')
+
+    # Primero llena la primera columna con los valores de 'x'
+    for priCol in range(n + 1):
+        matDatos[priCol, 0] = round(inferior + (h * priCol), 6)
+
+    # Evalua la funcion en cada punto de 'x' y lo almacena en la segunda columna
+    for segCol in range(n + 1):
+        matDatos[segCol, 1] = funcion.subs(x = matDatos[segCol, 0])
+
+    # Regresa la matriz con los datos que se usaran aplicando la regla del trapecio
+    return matDatos

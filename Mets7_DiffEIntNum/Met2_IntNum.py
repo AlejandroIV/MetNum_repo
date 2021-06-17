@@ -1,4 +1,4 @@
-"""Modulo que contiene las formulas de la Integracion Numerica (Newton Cotes) para calcular la integral"""
+"""Modulo que contiene las formulas de la Integracion Numerica (Newton Cotes)"""
 
 from sage.all import SR, sage, round
 import numpy as np
