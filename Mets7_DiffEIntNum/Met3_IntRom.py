@@ -52,11 +52,12 @@ def Integracion_Romberg(nombre):
     # Anexa los valores de los errores a la matriz 'matRom'
     matRom = np.append(matRom, vectErr, axis = 1)
 
-    print(f"\n{matRom}\n")
+    # Imprime la matriz 'matRom'
+    print("\n" + "\n".join([''.join(['{:13}'.format(round(val, 8)) for val in fila]) for fila in matRom]) + "\n")
 
     print(f"\nUsando la integracion de Romberg")
     print(f"La aproximacion de la integral de x = {datosUsr[0]} a x = {datosUsr[1]}", end = " ")
-    print(f"con {datosUsr[2]} iteraciones es: {round(matRom[-1, -2], 7)}, con un error de: {round(matRom[-1, -1], 7)}\n\n")
+    print(f"con {datosUsr[2]} iteraciones es: {round(matRom[-1, -2], 8)}, con un error de: {round(matRom[-1, -1], 8)}\n\n")
 
 def IntegracionRomberg():
     fNombre = input("Escribe el nombre del archivo sin escribir la extension '.txt': ")
